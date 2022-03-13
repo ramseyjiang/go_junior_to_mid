@@ -1,0 +1,11 @@
+In the golang_learn folder,
+
+How to run files.go?
+% go run base/usages/files/files.go ./base/usages
+% go run base/usages/files/files.go ./base
+
+how to run read_file_defer.go?
+go run base/usages/files/read_file_defer.go base/usages/files/data.txt
+
+how to run read_file.go?
+% go run base/usages/files/read_file.go
