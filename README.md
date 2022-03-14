@@ -4,6 +4,11 @@ This repo is detached from learn_go, in this repository, it includes almost all 
 
 If you are not a junior, please go to https://github.com/ramseyjiang/go_mid_to_senior, almost the whole repo has unittests.
 
+All codes in this repo, after you clone, if you want to run in your local, 
+1. Please change all pkg names to main.
+2. After step 1, please open your terminal, go the file folder, and execute "go run filename.go"
+
+
 Golang has 6 differences with other Object-Oriented languages.
 1. The first things is you should take care of types in Go.
 
@@ -43,6 +48,7 @@ First, because GO lacks one key component in most programming languages: the try
 So GO does not let you wrap your entire code into a single try-catch to screw up as much as you’d like.
 If you think that a certain part of your code is risky or error-prone,
 you should handle that part individually with its one conditions and proper response.
+
 So the way that GO does this is by having two responses on its functions,
 normally the standard says that you should return an error alongside your response and wherever you invoke that function,
 you’d either get that error and validate it with an if statement,
