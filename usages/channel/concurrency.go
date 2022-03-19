@@ -1,4 +1,4 @@
-package main
+package channel
 
 import (
 	"fmt"
@@ -17,7 +17,7 @@ type Page struct {
 Before, our program had to request pages one at a time. Goroutines let us start processing the next request while
 we’re waiting for a website to respond. The program completes in as little as one-third of the time!
 */
-func main() {
+func TriggerConcurrency() {
 	pages := make(chan Page) // Make a channel of int values.
 	urls := []string{"https://example.com", "https://golang.org/", "https://google.com"}
 

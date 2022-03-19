@@ -1,4 +1,4 @@
-package main
+package channel
 
 import "fmt"
 
@@ -13,7 +13,8 @@ Hence, this read operation will be blocking. Similarly, if you are to send data 
 it will block current goroutine and unblock others until some goroutine reads the data from it.
 Hence, this sends operation will be blocking.
 */
-func main() {
+
+func TriggerDeadlock() {
 	// Use the make keyword to create a new object. Specify what type of data is returned from the channel using string.
 	dataChannel := make(chan string)
 

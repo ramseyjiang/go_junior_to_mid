@@ -1,4 +1,4 @@
-package main
+package channel
 
 import "fmt"
 
@@ -35,7 +35,8 @@ Hence, this read operation will be blocking. Similarly, if you are to send data 
 it will block current goroutine and unblock others until some goroutine reads the data from it. Hence,
 this sends operation will be blocking.
 */
-func main() {
+
+func TriggerBlock() {
 	channel1 := make(chan string)
 	channel2 := make(chan string)
 	go abc(channel1)

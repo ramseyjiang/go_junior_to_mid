@@ -1,4 +1,4 @@
-package main
+package channel
 
 import (
 	"fmt"
@@ -99,7 +99,7 @@ func squares(c chan int) {
 	}
 }
 
-func main() {
+func TriggerBuffer() {
 	channelCapacity()
 	channelBufferFullBlock()
 }

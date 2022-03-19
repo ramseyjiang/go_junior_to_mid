@@ -1,4 +1,4 @@
-package main
+package channel
 
 import (
 	"fmt"
@@ -12,7 +12,8 @@ import (
 The first to arrive is:
 speed 2
 */
-func main() {
+
+func TriggerMultiChanSelect() {
 	c1 := make(chan string)
 	c2 := make(chan string)
 	go speed1(c1)

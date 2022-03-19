@@ -1,4 +1,4 @@
-package main
+package channel
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func main() {
+func TriggerGoroutineConcurrency() {
 	list := []string{"a", "b", "c", "d", "e", "f", "g", "h"}
 
 	noCurrency(list)

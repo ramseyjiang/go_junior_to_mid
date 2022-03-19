@@ -1,4 +1,4 @@
-package main
+package channel
 
 import "fmt"
 
@@ -46,16 +46,16 @@ func firstWayCreateChannel() chan string {
 }
 
 func secondWayCreateChannel() chan string {
-	var secondWayChannel chan string // Declare a variable to hold a channel
+	// var secondWayChannel chan string // Declare a variable to hold a channel
 
 	// created an object of type channel that can be used to transfer string data within the goroutines.
-	secondWayChannel = make(chan string)
+	secondWayChannel := make(chan string)
 
 	return secondWayChannel
 }
 
-// Check the output sort, you will know during the channel read and write, how the channel block works.
-func main() {
+// TriggerGoroutine Check the output sort, you will know during the channel read and write, how the channel block works.
+func TriggerGoroutine() {
 	firstWayChannel := firstWayCreateChannel()
 
 	// This output is the fifth. Pass the channel to function running in a new goroutine

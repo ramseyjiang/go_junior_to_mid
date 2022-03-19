@@ -1,10 +1,10 @@
-package main
+package channel
 
 import (
 	"fmt"
 )
 
-func main() {
+func TriggerAsyncGoroutine() {
 	var numbers []int // nil
 	done := make(chan struct{})
 	// start a goroutine to initialise array
