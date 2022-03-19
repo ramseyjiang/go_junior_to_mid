@@ -5,10 +5,13 @@ import (
 	"reflect"
 )
 
-type Person struct {
+type User struct {
 	name string
 	age  int64
 }
+
+type FirstInt int
+type SecondInt int
 
 // Using TypeOf and ValueOf gives back to us the underlying type, and a pointer to the value.
 // The value coming from ValueOf is of type Reflect.Value, and not the original variable type.
@@ -22,10 +25,24 @@ func main() {
 	// fmt.Println(value1 + 1) // It will have an error as the comments above.
 
 	type2, value2 := structReflect()
-	fmt.Println(type2, value2) // output is main.Person {Kobe Davy}
+	fmt.Println(type2, value2) // output is main.User {Kobe Davy}
 
-	var myVar interface{} = Person{name: "Ramsey", age: 40}
+	var myVar interface{} = User{name: "Ramsey", age: 40}
 	getTypeFromStruct(myVar)
+
+	usageDeepEqual()
+}
+
+/**
+m and n are both int and have a value of 1.
+However, the dynamic type of these two variables is different.
+First variable m has a type of FirstInt, and the second variable n has a type of SecondInt.
+Therefore, they are not deeply equal.
+*/
+func usageDeepEqual() {
+	m := FirstInt(1)
+	n := SecondInt(1)
+	fmt.Println(reflect.DeepEqual(m, n)) // false
 }
 
 func emptyInterfaceReflect() (reflect.Type, reflect.Value, int64) {
@@ -38,7 +55,7 @@ func emptyInterfaceReflect() (reflect.Type, reflect.Value, int64) {
 }
 
 func structReflect() (reflect.Type, reflect.Value) {
-	var person interface{} = Person{name: "Kobe Davy"}
+	var person interface{} = User{name: "Kobe Davy"}
 
 	type2 := reflect.TypeOf(person)
 	value2 := reflect.ValueOf(person)
@@ -58,10 +75,10 @@ func getTypeFromStruct(s interface{}) {
 			field := reflectValue.Field(i)
 			fmt.Printf("type: %T, value: %v \n", field, field)
 
-			// It works, because Person.age can be changed to string type from int type.
+			// It works, because User.age can be changed to string type from int type.
 			fmt.Printf("type: %T, value: %v \n", field.String(), field)
 
-			// The below won't work, because Person.name is a string type.
+			// The below won't work, because User.name is a string type.
 			// fmt.Printf("type: %T, value: %v \n", field.Int(), field)
 		}
 	}
