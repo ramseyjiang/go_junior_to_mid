@@ -1,4 +1,4 @@
-package channel
+package main
 
 import "fmt"
 
@@ -36,18 +36,24 @@ it will block current goroutine and unblock others until some goroutine reads th
 this sends operation will be blocking.
 */
 
-func TriggerBlock() {
-	channel1 := make(chan string)
-	channel2 := make(chan string)
-	go abc(channel1)
+func main() {
+	c1 := make(chan string)
+	c2 := make(chan string)
+	go abc(c1)
 	fmt.Println("---channel block line---") // It will run fmt.Print("channel block line") before go channel run.
-	go def(channel2)
+	go def(c2)
 
-	fmt.Print(<-channel1)
-	fmt.Print(<-channel2)
-	fmt.Print(<-channel1)
-	fmt.Print(<-channel2)
-	fmt.Print(<-channel1)
-	fmt.Print(<-channel2)
+	fmt.Print(<-c1)
+	fmt.Print(<-c2)
+	fmt.Print(<-c1)
+	fmt.Print(<-c2)
+	fmt.Print(<-c1)
+	fmt.Print(<-c2)
 	fmt.Println() // If not has the last fmt.Println(), the result will be "adbecf%". After has it, result is "adbecf"
+
+	// The below code will be triggered deadlock. Because all read data before, they are read data from the channel
+	// which is scheduled by the Go Scheduler.
+	// All read operations <-c1 or <-c2 are non-blocking because data is present in channel c1 and c2 to be read from.
+	// However, the below one, it does not have any data to be read from, so it triggers the deadlock.
+	fmt.Println(<-c1)
 }

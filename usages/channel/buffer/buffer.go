@@ -1,4 +1,4 @@
-package channel
+package main
 
 import (
 	"fmt"
@@ -63,26 +63,33 @@ Technically, that means goroutine that reads buffer channel will not block until
 func channelBufferFullBlock() {
 	fmt.Println("channelBufferFullBlock start")
 
+	// No new goroutine is triggered, so it is still one.
+	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
+
 	c := make(chan int, 3)
-	go squares(c)
-	fmt.Println("active goroutines", runtime.NumGoroutine())
+	go squares(c) // trigger a new goroutine works.
+
+	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 2
 
 	c <- 1
 	c <- 2
 	c <- 3
-	c <- 4 // blocks here, after this line, buffer is full, it won't run the next c<-5.
-	c <- 5 // It does not have the next go squares(c), it won't be executed.
+	c <- 4 // After this executes, one channel is full, so that goroutine stops working. Blocks here.
+	c <- 5
 
-	fmt.Println("active goroutines", runtime.NumGoroutine())
+	fmt.Println("How many core cpu is available?", runtime.NumCPU())
 
-	go squares(c)
+	// because one channel is full, so the full channel stops working, only one channel still works.
+	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
 
-	fmt.Println("active goroutines", runtime.NumGoroutine())
+	go squares(c) // trigger a new goroutine works.
+
+	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 2
 
 	c <- 6
 	c <- 7
-	c <- 8 // blocks here, after this line, buffer is full, it won't run the next c<-9. Because it will run c<-5 at first.
-	c <- 9
+	c <- 8 // blocks here, after this line, buffer is full, it won't run the next c<-9. Because it will run c<9 at first.
+	c <- 9 // why?
 
 	fmt.Println("active goroutines", runtime.NumGoroutine())
 
@@ -99,7 +106,9 @@ func squares(c chan int) {
 	}
 }
 
-func TriggerBuffer() {
-	channelCapacity()
+func main() {
+	// main() is a special goroutine.
+	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
+	// channelCapacity()
 	channelBufferFullBlock()
 }

@@ -31,25 +31,25 @@ When you might use interface.
 
 type Whistle string
 
-func (w Whistle) MakeSound() {
-	fmt.Println("Tweet!")
+func (w Whistle) MakeSound(params string) {
+	fmt.Println(params)
 }
 
 type Horn string
 
-func (h Horn) MakeSound() {
-	fmt.Println("Honk!")
+func (h Horn) MakeSound(params string) {
+	fmt.Println(params)
 }
 
 // Only methods which are defined in the interface can be called by an interface type.
-// NoiseMaker interface is satisfied by any type that has a MakeSound method
 
+// NoiseMaker interface is satisfied by any type that has a MakeSound method.
 type NoiseMaker interface {
-	MakeSound()
+	MakeSound(params string)
 }
 
-func play(n NoiseMaker) {
-	n.MakeSound()
+func play(n NoiseMaker, params string) {
+	n.MakeSound(params)
 }
 
 // An interface has two types. They are the static type and the dynamic type.
@@ -86,15 +86,15 @@ func explain(i interface{}) {
 func main() {
 	// The comment codes are the basic way.
 	// var toy NoiseMaker
-	// toy = Whistle("Toy Canary")	//implicitly implemented.
+	// toy = Whistle("Toy Canary") // implicitly implemented.
 	// toy.MakeSound()
 	//
-	// toy = Horn("Toy Blaster")	////implicitly implemented.
+	// toy = Horn("Toy Blaster") // implicitly implemented.
 	// toy.MakeSound()
 
 	// The below way is that declare function parameters with interface types.
-	play(Whistle("Toy Canary"))
-	play(Horn("Toy Blaster"))
+	play(Whistle("Toy Canary"), "Toy Canary")
+	play(Horn("Toy Blaster"), "Toy Blaster")
 
 	// we can see that zero value and type of the interface is nil. This is because, at this moment, we have
 	// declared the variable s of type Shape but did not assign any value.

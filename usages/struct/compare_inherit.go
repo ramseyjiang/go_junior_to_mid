@@ -22,7 +22,7 @@ type subscriber struct {
 type employee struct {
 	name    string
 	salary  float64
-	address // This way is the anonymous struct fields.
+	address // This way is the anonymousgoroutine struct fields.
 }
 
 type address struct {
@@ -81,7 +81,6 @@ func showSubscriberInfo(user subscriber) subscriber {
 }
 
 // It is an easy way to change a value in struct and don't need a return.
-// Using this way, it will take up computer's memory. So if lots of fields, using this way not a good choice.
 func applyDiscount(testSubscriber *subscriber) {
 	// Assign to the struct field through the pointer.
 	testSubscriber.number = 5
@@ -118,7 +117,7 @@ func main() {
 	var employeeStruct employee
 	setEmployeeValue(&employeeStruct)
 
-	// If it is the anonymous fields, it uses an anonymous field to make our inner struct easier to access.
+	// If it is the anonymousgoroutine fields, it uses an anonymousgoroutine field to make our inner struct easier to access.
 	employeeStruct.address = addressStruct
 	fmt.Println(employeeStruct, employeeStruct.address.postCode)
 }

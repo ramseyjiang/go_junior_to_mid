@@ -1,4 +1,4 @@
-package channel
+package main
 
 import "fmt"
 
@@ -14,25 +14,39 @@ it will block current goroutine and unblock others until some goroutine reads th
 Hence, this sends operation will be blocking.
 */
 
-func TriggerDeadlock() {
+func main() {
 	// Use the make keyword to create a new object. Specify what type of data is returned from the channel using string.
-	dataChannel := make(chan string)
+	c := make(chan string)
 
 	// Telling the main function to keep waiting until the channel receives the data.
-	fmt.Println(<-dataChannel)
-
-	/**
-	In the program above, we don’t have any other goroutines sending data to the channel.
-	Since there is no other channel available, the Golang program will encounter a deadlock waiting to receive the data.
-	*/
+	fmt.Println(<-c)
 }
+
+/**
+In the program above, we don’t have any other goroutines sending data to the channel.
+Since there is no other channel available, the Golang program will encounter a deadlock waiting to receive the data.
+These errors seem like all goroutines are asleep or simply no other goroutines are available to schedule.
+
+Because it only sends data to a goroutine, but it does not have a goroutine to receive it before.
+*/
 
 /**
 fatal error: all goroutines are asleep - deadlock!
 
 goroutine 1 [chan receive]:
 main.main()
-        /Users/daweijiang/go/src/golang_learn/base/usages/channel/deadlock.go:6 +0x36
+        /Users/daweijiang/go/src/golang_learn/base/usages/channel/instance1.go
 exit status 2
 */
-// These errors seem like all goroutines are asleep or simply no other goroutines are available to schedule.
+
+// Using the following code it will fix.
+// func greet(c chan string) {
+// 	<-c
+// }
+//
+// func main() {
+// 	c := make(chan string)
+// 	go greet(c)
+// 	c <- "John"
+// 	close(c) // closing channel
+// }
