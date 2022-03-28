@@ -24,7 +24,7 @@ func decodeUsage(str string) {
 	res := response{}
 
 	// While decoding the json byte using unmarshal.
-	// the first argument is the json byte
+	// the first argument is the json byte, function unmarshal only accept json data type []byte
 	// the second argument is the address of the response type struct where we want the json to be mapped to
 	if err := json.Unmarshal([]byte(str), &res); err != nil {
 		panic(err)
