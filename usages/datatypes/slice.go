@@ -30,10 +30,12 @@ func main() {
 	fmt.Println(x) // [1 2]
 
 	slice := appendSlice(x)
-	fmt.Println("append alice results: ", slice)
+	fmt.Println("append alice results: ", slice) // [1 2 7 8 4 5]
 
 	slice1, slice2, slice3 := copySlice()
-	fmt.Println(slice1, slice2, slice3)
+	fmt.Println(slice1, slice2, slice3) // [1 2 3 4] [1 2 3] 3
+
+	trickSlice()
 }
 
 /*
@@ -56,11 +58,32 @@ func appendSlice(slice []float64) []float64 {
 */
 func copySlice() ([]int, []int, int) {
 	slice1 := []int{1, 2, 3, 4}
-	slice2 := make([]int, 3) // It means slice2 maximum length is 2.
+	slice2 := make([]int, 3) // It means slice2 maximum length is 3.
 
 	// copy() returns the number of elements copied, which will be the minimum of len(src) and len(dst).
 	slice3 := copy(slice2, slice1)
 	fmt.Println(slice1, slice2, slice3)
 
 	return slice1, slice2, slice3
+}
+
+func trickSlice() {
+	numbers := []int{1, 3}
+	newNumbersA := numbers
+	fmt.Println(newNumbersA, cap(newNumbersA), len(newNumbersA))
+
+	newNumbersA = append(numbers, 5)
+	fmt.Println(newNumbersA, numbers, cap(numbers), len(numbers))
+
+	numbers[0] = 10
+	fmt.Println(newNumbersA, numbers)
+
+	newNumbersB := append(newNumbersA, 7)
+	fmt.Println(newNumbersA, numbers, newNumbersB, cap(newNumbersA), len(newNumbersA))
+
+	newNumbersA[1] = 50
+	fmt.Println(newNumbersA, numbers, newNumbersB, cap(newNumbersB), len(newNumbersB))
+
+	newNumbersA[0] = 30
+	fmt.Println(newNumbersA, numbers, newNumbersB, cap(newNumbersB), len(newNumbersB))
 }

@@ -43,10 +43,16 @@ Go has an M:N scheduler that can also utilize multiple processors.
 At any time, M goroutines need to be scheduled on N OS threads that run on at most on GOMAXPROCS numbers of processors. 
 At any time, at most only one thread is allowed to run per core.
 
-If your program doesn’t start any additional goroutines, 
-it will naturally run in only one thread no matter how many cores you allow it to use.!
+If your program does not start any additional goroutines, 
+it will naturally run in only one thread no matter how many cores you allow it to use.
 Goroutines require less memory than threads, less time to start up and stop.
 main() is a special goroutine.
+
+The runtime scheduler multiplexes the goroutines to a few OS threads.
+There are 3 types of goroutines, running, runnable and blocked. 
+1.running which are the ones that are actually being running in an OS thread; 
+2.runnable which are the ones that are ready to be executed, but they are paused; 
+3.blocked which are the goroutines that are not ready for execution. 
 
 
 **how block Goroutines and channels** 
