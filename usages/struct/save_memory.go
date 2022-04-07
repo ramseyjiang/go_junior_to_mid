@@ -16,6 +16,8 @@ is the same as a cpu maximum process ability of each clock cycle.
 In golang, data type and size list is following:
 Data Type 			Size
 bool				1 byte
+int16				2 byte
+int32				4 byte
 int64				8 byte
 string				16 byte
 float32				4 byte
@@ -26,23 +28,29 @@ type Employee1 struct {
 	Age       int64
 	IsMarried bool
 	Name      string
+	weight    int32
+	height    int16
 	Photo     float32
 }
 
 type Employee2 struct {
 	Name      string
-	Photo     float32
 	Age       int64
-	IsActive  bool
+	Photo     float32
+	weight    int32
+	height    int16
 	IsMarried bool
+	IsActive  bool
 }
 
 type Employee3 struct {
 	Name      string
-	Age       int64
-	Photo     float32
 	IsActive  bool
+	Age       int64
 	IsMarried bool
+	weight    int32
+	height    int16
+	Photo     float32
 }
 
 var employee1 Employee1

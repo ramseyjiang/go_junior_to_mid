@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 /*
@@ -36,6 +37,8 @@ func main() {
 	fmt.Println(slice1, slice2, slice3) // [1 2 3 4] [1 2 3] 3
 
 	trickSlice()
+
+	efficiencySlice()
 }
 
 /*
@@ -68,22 +71,59 @@ func copySlice() ([]int, []int, int) {
 }
 
 func trickSlice() {
-	numbers := []int{1, 3}
+	numbers := []int{1, 3, 7, 11}
 	newNumbersA := numbers
-	fmt.Println(newNumbersA, cap(newNumbersA), len(newNumbersA))
+	newNumbersB := numbers[1:4]
 
-	newNumbersA = append(numbers, 5)
-	fmt.Println(newNumbersA, numbers, cap(numbers), len(numbers))
+	numbers[2] = 10
+	fmt.Println(newNumbersA, numbers, newNumbersB)
 
-	numbers[0] = 10
-	fmt.Println(newNumbersA, numbers)
+	newNumbersA[3] = 50
+	fmt.Println(newNumbersA, numbers, newNumbersB)
 
-	newNumbersB := append(newNumbersA, 7)
-	fmt.Println(newNumbersA, numbers, newNumbersB, cap(newNumbersA), len(newNumbersA))
+	newNumbersB[1] = 30
+	fmt.Println(newNumbersA, numbers, newNumbersB)
 
-	newNumbersA[1] = 50
-	fmt.Println(newNumbersA, numbers, newNumbersB, cap(newNumbersB), len(newNumbersB))
+	// On the above, newNumbersA and newNumbersB are using the same original array, that's why update one,
+	// then others results are changed.
+	// newNumbersC is defined using append, and it appends to a new slice, so it is changed, it won't change the original slice.
+	newNumbersC := append([]int{}, numbers...)
+	fmt.Println(newNumbersC)
+	newNumbersB[1] = 20
+	fmt.Println(newNumbersA, numbers, newNumbersB, newNumbersC)
+}
 
-	newNumbersA[0] = 30
-	fmt.Println(newNumbersA, numbers, newNumbersB, cap(newNumbersB), len(newNumbersB))
+func efficiencySlice() {
+	start := time.Now()
+	inputSlice := [6]int{0, 1, 2, 3, 4, 5}
+
+	var sum int
+	var firstSlice []int
+	for sum = 0; sum < 100000; sum++ {
+		for _, v := range inputSlice {
+			firstSlice = append(firstSlice, v)
+		}
+	}
+	elapsed1 := time.Since(start)
+	fmt.Println(elapsed1, len(firstSlice))
+
+	start = time.Now()
+	secondSlice := make([]int, len(firstSlice))
+	for sum = 0; sum < 100000; sum++ {
+		for i, v := range inputSlice {
+			secondSlice[i] = v
+		}
+	}
+	elapsed2 := time.Since(start)
+	fmt.Println(elapsed2, len(secondSlice))
+
+	start = time.Now()
+	thirdSlice := make([]int, 0, len(firstSlice))
+	for sum = 0; sum < 100000; sum++ {
+		for _, v := range inputSlice {
+			thirdSlice = append(thirdSlice, v)
+		}
+	}
+	elapsed3 := time.Since(start)
+	fmt.Println(elapsed3, len(secondSlice))
 }

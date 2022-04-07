@@ -39,7 +39,7 @@ func printStringType() {
 	// Sprint does everything what Print does but does not write the resulting string to the standard output,
 	// but it returns the resulting string.
 	fmt.Print("fmt.Sprint and fmt.Sprintf output is nothing, but it can be used set value.\n")
-	s1 := fmt.Sprint("It is a %s ", "string\n")
+	s1 := fmt.Sprintf("It is a %s ", "string\n")
 	s2 := fmt.Sprintln("fmt.Println output:\n", 1, nil, false, 3, true, "string")
 	fmt.Print(s1, s2)
 
@@ -87,7 +87,7 @@ func formatVerbs() {
 
 	// %s (string format)
 	fmt.Printf("Usual string format is %s\n", "hello")
-	// %q (excaped string format)
+	// %q (escaped string format)
 	fmt.Printf("Excaped string format is %q\n", "hello")
 }
 
