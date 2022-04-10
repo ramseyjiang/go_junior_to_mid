@@ -26,12 +26,12 @@ import (
 	arr[:] is the same as arr[0:len(arr)].
 */
 func main() {
-	arr := [3]float64{1, 2, 3}
+	arr := [3]int64{1, 2, 3}
 	x := arr[0:2]  // It means x includes the first 5 elements in arr.
 	fmt.Println(x) // [1 2]
 
-	slice := appendSlice(x)
-	fmt.Println("append alice results: ", slice) // [1 2 7 8 4 5]
+	slice := appendSlice(x, arr)
+	fmt.Println("append alice results: ", slice) // [1 2 7 4 5]
 
 	slice1, slice2, slice3 := copySlice()
 	fmt.Println(slice1, slice2, slice3) // [1 2 3 4] [1 2 3] 3
@@ -47,10 +47,17 @@ func main() {
 	the element is placed after the last element and the length is incremented.
 	However, if there is not enough capacity, a new array is created, all of existing elements are
 */
-func appendSlice(slice []float64) []float64 {
+func appendSlice(slice []int64, arr [3]int64) []int64 {
+	arr1 := make([]int64, 0, len(arr))
+	arr2 := make([]int64, len(arr))
+
 	slice = append(slice, 7)
-	slice = append(slice, 8)
 	slice = append(slice, 4, 5)
+
+	slice1 := append(arr1, slice...)
+	fmt.Println("arr1 append result is ", slice1)
+	slice2 := append(arr2, slice...)
+	fmt.Println("arr2 append result is ", slice2)
 
 	return slice
 }
