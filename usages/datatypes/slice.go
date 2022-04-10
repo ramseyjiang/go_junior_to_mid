@@ -55,9 +55,9 @@ func appendSlice(slice []int64, arr [3]int64) []int64 {
 	slice = append(slice, 4, 5)
 
 	slice1 := append(arr1, slice...)
-	fmt.Println("arr1 append result is ", slice1)
+	fmt.Println("arr1 append result is ", slice1) // [0 0 0 1 2 7 4 5]
 	slice2 := append(arr2, slice...)
-	fmt.Println("arr2 append result is ", slice2)
+	fmt.Println("arr2 append result is ", slice2) // [1 2 7 4 5]
 
 	return slice
 }
