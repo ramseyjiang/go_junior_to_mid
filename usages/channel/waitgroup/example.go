@@ -42,4 +42,6 @@ func main() {
 	// Wait method is used to block the current goroutine from where it was called.
 	// Once counter reaches 0, that goroutine will unblock.
 	wg.Wait()
+
+	fmt.Println("main goroutine finished, all goroutines have finished")
 }
