@@ -13,7 +13,7 @@ type ExecutionFn func(ctx context.Context, args interface{}) (interface{}, error
 type JobDescriptor struct {
 	ID       JobID
 	JType    jobType
-	Metadata map[string]interface{}
+	Metadata jobMetadata
 }
 
 type Result struct {
