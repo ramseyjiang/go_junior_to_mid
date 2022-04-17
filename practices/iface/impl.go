@@ -4,7 +4,7 @@ import "fmt"
 
 // This file can be separated two files, such as Fan and CoffeePot implements.
 
-type Fan string
+type Fan int
 
 func (f Fan) TurnOn(name string) string {
 	return name

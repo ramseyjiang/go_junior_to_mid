@@ -7,7 +7,7 @@ import (
 
 func TestExec(t *testing.T) {
 	Exec()
-	var fan Appliance = Fan("Breeze")
+	var fan Appliance = Fan(0)
 	var coffeePot Appliance = CoffeePot("LuxBrew")
 
 	wantCoffeePotOutput := "CoffeePot has been turned off."
@@ -44,7 +44,7 @@ func TestCoffeePot_TurnOn(t *testing.T) {
 }
 
 func TestFan_TurnOff(t *testing.T) {
-	var fan Appliance = Fan("Breeze")
+	var fan Appliance = Fan(0)
 	wantFanOutput := "Fan has been turned off."
 	t.Run("Test Fan Turn Off", func(t *testing.T) {
 		if got := fan.TurnOff(); !reflect.DeepEqual(got, wantFanOutput) {
@@ -54,7 +54,7 @@ func TestFan_TurnOff(t *testing.T) {
 }
 
 func TestFan_TurnOn(t *testing.T) {
-	var fan Appliance = Fan("Breeze")
+	var fan Appliance = Fan(1)
 	wantFanOutput := "Today is too cool."
 	t.Run("Test Fan Turn On", func(t *testing.T) {
 		if got := fan.TurnOn(wantFanOutput); !reflect.DeepEqual(got, wantFanOutput) {
