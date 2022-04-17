@@ -9,9 +9,12 @@ func TestExec(t *testing.T) {
 	Exec()
 	var fan Appliance = Fan(0)
 	var coffeePot Appliance = CoffeePot("LuxBrew")
+	temperatures := Heater{ut: 26, nt: 20}
+	var heater Appliance = Heater(temperatures)
 
 	wantCoffeePotOutput := "CoffeePot has been turned off."
 	wantFanOutput := "Fan has been turned off."
+	wantHeaterOutput := "Heater has been turned off."
 	t.Run("Test CoffeePot Turn Off", func(t *testing.T) {
 		if got := coffeePot.TurnOff(); !reflect.DeepEqual(got, wantCoffeePotOutput) {
 			t.Errorf("execute() = %v, want %v", got, wantCoffeePotOutput)
@@ -19,6 +22,11 @@ func TestExec(t *testing.T) {
 
 		if got := fan.TurnOff(); !reflect.DeepEqual(got, wantFanOutput) {
 			t.Errorf("execute() = %v, want %v", got, wantFanOutput)
+		}
+
+		// test for heater
+		if got := heater.TurnOff(); !reflect.DeepEqual(got, wantHeaterOutput) {
+			t.Errorf("execute() = %v, want %v", got, wantHeaterOutput)
 		}
 	})
 }

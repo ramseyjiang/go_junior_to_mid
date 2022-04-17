@@ -27,3 +27,18 @@ func (c CoffeePot) TurnOff() string {
 func (c CoffeePot) Brew() {
 	fmt.Println("Heating Up")
 }
+
+type Heater struct {
+	ut int // usual temperature
+	nt int // night temperature
+}
+
+func (h Heater) TurnOn(name string) string {
+	fmt.Println("usual temperature is ", h.ut)
+	fmt.Println("night temperature is ", h.nt)
+	return name
+}
+
+func (h Heater) TurnOff() string {
+	return "Heater has been turned off."
+}
