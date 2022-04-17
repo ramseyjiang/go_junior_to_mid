@@ -33,6 +33,13 @@ type Heater struct {
 	nt int // night temperature
 }
 
+const ut = 26
+const nt = 20
+
+func New() Heater {
+	return Heater{ut: ut, nt: nt}
+}
+
 func (h Heater) TurnOn(name string) string {
 	fmt.Println("usual temperature is ", h.ut)
 	fmt.Println("night temperature is ", h.nt)
