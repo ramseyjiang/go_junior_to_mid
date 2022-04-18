@@ -31,9 +31,9 @@ them to proceed only when it’s ready to read the values they’re sending.
 /**
 If you are trying to read data from a channel but channel does not have a value available with it,
 it blocks the current goroutine and unblocks other in a hope that some goroutine will push a value to the channel.
-Hence, this read operation will be blocking. Similarly, if you are to send data to a channel,
-it will block current goroutine and unblock others until some goroutine reads the data from it. Hence,
-this sends operation will be blocking.
+Hence, this read operation will be blocked.
+Similarly, if you send data to a channel, it will block current goroutine and unblock others until some goroutine reads the data from it.
+Hence, this sends operation will be blocked.
 */
 
 func main() {
@@ -51,9 +51,9 @@ func main() {
 	fmt.Print(<-c2)
 	fmt.Println() // If not has the last fmt.Println(), the result will be "adbecf%". After has it, result is "adbecf"
 
-	// The below code will be triggered deadlock. Because all read data before, they are read data from the channel
+	// The below code will be triggered deadlock. Because all read data before, they are reading data from the channel
 	// which is scheduled by the Go Scheduler.
 	// All read operations <-c1 or <-c2 are non-blocking because data is present in channel c1 and c2 to be read from.
 	// However, the below one, it does not have any data to be read from, so it triggers the deadlock.
-	fmt.Println(<-c1)
+	// fmt.Println(<-c1)
 }

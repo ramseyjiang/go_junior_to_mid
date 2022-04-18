@@ -12,9 +12,8 @@ import (
 // This func is used to prove a channel which is created has a buffer.
 // It won't block, before the buffer is full.
 
-// Using buffered channels and for range, we can read from closed channels. Since for closed channels,
-// data lives in the buffer, we can still extract that data.
-// When the buffer size is non-zero n, goroutine is not blocked until after buffer is full.
+// Using buffered channels and for range, we can read from closed channels.
+// Since for closed channels, data lives in the buffer, we can still extract that data.
 func channelCapacity() {
 	fmt.Println("channelCapacity start")
 
@@ -27,7 +26,7 @@ func channelCapacity() {
 	// In the sender(c), it has closed the channel, but it uses buffer, so below codes can also read data from buffer.
 	for val := range c {
 		// After buffer a channel, output is from the first buffer to the last one.
-		fmt.Printf("Length of channel c after value '%v' read is %v\n", val, len(c))
+		fmt.Printf("Length of channel c has read value '%v' length is %v, capacity is %v\n", val, len(c), cap(c))
 	}
 
 	fmt.Println("channelCapacity end")
@@ -39,12 +38,11 @@ func sender(dataChannel chan string) {
 	dataChannel <- "Buffered Channel"       // len 0, cap 2, block here.
 
 	// If here does not have the close(c), it will have "fatal error: all goroutines are asleep - deadlock!"
-	// After it add the close, it won't wait for receiving a data.
+	// After it adds the close, it won't wait for receiving a data.
 	close(dataChannel)
 }
 
-// Length of a channel is the number of values queued (unread) in channel buffer
-// while the capacity of a channel is the buffer size.
+// Length of a channel is the number of values queued (unread) in channel buffer while the capacity of a channel is the buffer size.
 
 // As many of you pointed out, the last value of active goroutines should be 1.
 
@@ -63,35 +61,51 @@ Technically, that means goroutine that reads buffer channel will not block until
 func channelBufferFullBlock() {
 	fmt.Println("channelBufferFullBlock start")
 
-	// No new goroutine is triggered, so it is still one.
+	// No new goroutine is triggered, so it is still one. The main is a special goroutine.
 	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
 
 	c := make(chan int, 3)
 	go squares(c) // trigger a new goroutine works.
 
-	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 2
-
-	c <- 1
-	c <- 2
-	c <- 3
-	c <- 4 // After this executes, one channel is full, so that goroutine stops working. Blocks here.
-	c <- 5
+	// active goroutines 2, because the main one and the go squares(c) are running.
+	fmt.Println("active goroutines", runtime.NumGoroutine())
 
 	fmt.Println("How many core cpu is available?", runtime.NumCPU())
 
-	// because one channel is full, so the full channel stops working, only one channel still works.
+	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
+	c <- 0
+	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
+	c <- 1
+	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
+	c <- 2
+	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
+	c <- 3                                                   // After this executes, one channel is full, so that goroutine squares stops working. squares will output results in loop.
 	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
 
-	go squares(c) // trigger a new goroutine works.
+	fmt.Println()
+	fmt.Println("After func squares outputs all variables, channel c is empty again. So it can receive values again.")
 
-	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 2
+	// In squares func, if it has close(c), only c <- 4 will run successfully.
+	// If it does not have close(c), c <- 4, c <- 5 and c <- 6 will run successfully.
+	// Because channel c has 3 buffer, it can put 3 values in buffer after it is closed.
+	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
+	c <- 4
+	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
 
+	c <- 5
+	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
 	c <- 6
-	c <- 7
-	c <- 8 // blocks here, after this line, buffer is full, it won't run the next c<-9. Because it will run c<9 at first.
-	c <- 9 // why?
+	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
 
-	fmt.Println("active goroutines", runtime.NumGoroutine())
+	// fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
+	// go squares(c) // trigger another new goroutine works.
+	// fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 2
+	// c <- 7 // After this executes, one channel is full, so that goroutine squares stops working. squares will output results in loop.
+	// c <- 8 // If line 102 is uncommented, c <- 8 and c <- 9 will be store in the buffer.
+	// c <- 9
+
+	// because the channel is full, so the full channel stopped working, only main channel still works.
+	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
 
 	fmt.Println("channelBufferFullBlock end")
 }
@@ -104,11 +118,14 @@ func squares(c chan int) {
 		num := <-c
 		fmt.Println(num * num)
 	}
+	// If it has close(c), after the loop finishes, channel c will be closed. Then channel c 3 buffers will invalid.
+	// If it does not have close(c), the channel c 3 buffers will always valid.
+	// close(c)
 }
 
 func main() {
 	// main() is a special goroutine.
 	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
-	// channelCapacity()
 	channelBufferFullBlock()
+	channelCapacity()
 }
