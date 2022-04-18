@@ -1,4 +1,4 @@
-package channel
+package main
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func TriggerGoroutineConcurrency() {
+func main() {
 	list := []string{"a", "b", "c", "d", "e", "f", "g", "h"}
 
 	noCurrency(list)
@@ -38,7 +38,7 @@ func noCurrency(list []string) {
 }
 
 func withGoroutineConcurrency(list []string) {
-	fmt.Println("------withGoroutineConcurrency program begin executing------")
+	fmt.Println("-----withGoroutineConcurrency program begin executing------")
 
 	// WaitGroup is available in the sync package, it has functionalities that allow blocking and waiting
 	// for any number of goroutines to finish executing.
@@ -60,5 +60,5 @@ func withGoroutineConcurrency(list []string) {
 	// till the execution of all goroutines added using Add are finished.
 	// This is done by calling the Wait method on the WaitGroup instance from the current goroutine.
 	wg.Wait()
-	fmt.Println("------withGoroutineConcurrency program finished executing------")
+	fmt.Println("-----withGoroutineConcurrency program finished executing------")
 }

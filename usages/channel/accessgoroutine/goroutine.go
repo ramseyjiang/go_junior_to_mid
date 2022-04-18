@@ -1,4 +1,4 @@
-package channel
+package main
 
 import "fmt"
 
@@ -41,7 +41,8 @@ func firstWayCreateChannel() chan string {
 }
 
 func secondWayCreateChannel() chan string {
-	// var secondWayChannel chan string // Declare a variable to hold a channel
+	// It can be used to declare a variable to hold a channel, but it is only a nil channel, cannot be used as a real channel.
+	// var secondWayChannel chan string
 
 	// created an object of type channel that can be used to transfer string data within the goroutines.
 	secondWayChannel := make(chan string)
@@ -50,7 +51,7 @@ func secondWayCreateChannel() chan string {
 }
 
 // TriggerGoroutine Check the output sort, you will know during the channel read and write, how the channel block works.
-func TriggerGoroutine() {
+func main() {
 	firstWayChannel := firstWayCreateChannel()
 
 	// This output is the fifth. Pass the channel as a parameter in a new goroutine
@@ -79,7 +80,7 @@ func TriggerGoroutine() {
 
 	go greeting(secondWayChannel, "secondWayChannel")
 	receiveSecValue, ok := <-secondWayChannel
-	fmt.Println(receiveSecValue, ok, "fourth print") // Receive a value from the channel
+	fmt.Println(receiveSecValue, ok, "fifth print") // Receive a value from the channel
 
 	// Channels by default are pointers. It is the sixth output.
 	thirdChannel := make(chan string)
@@ -103,6 +104,6 @@ func TriggerGoroutine() {
 	        /Users/daweijiang/go/src/golang_learn/base/usages/channel/goroutine.go:86 +0x486
 	exit status 2
 	*/
-	thirdChannel <- "close"
-	// fmt.Println(thirdChannel)
+	// thirdChannel <- "close"	// thirdChannel has been closed on line 93, so it cannot receive a value.
+	fmt.Println(thirdChannel) // Print the thirdChannel address.
 }
