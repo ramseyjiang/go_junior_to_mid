@@ -1,4 +1,4 @@
-package channel
+package benchmarktest
 
 import (
 	"sync"
