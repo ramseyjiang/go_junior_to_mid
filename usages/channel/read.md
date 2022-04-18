@@ -16,8 +16,8 @@ Other languages, the traditional way to pass data from one thread to another is 
 One thread writes data to memory and another thread reads or updates the data from that same spot in memory. 
 
 But threads are unpredictable and could end up conflicting with one-another, which is why a lock is needed.
-However, using a lock can be very tricky to do correctly. 
-It’s the source of a litany of hard-to-detect bugs. Channels allow you to avoid those bugs by abstracting away that complexity into a simple-to-use interface.
+However, using a lock can be very tricky to do correctly. It’s the source of a litany of hard-to-detect bugs. 
+Channels allow you to avoid those bugs by abstracting away that complexity into a simple-to-use interface.
 
 Closing a channel prevents a goroutine from sending data into it. But it does not prevent consuming data from the channel. 
 This makes sense as we would not want to risk crucial data being left orphaned.
@@ -59,13 +59,13 @@ There are 3 types of goroutines, running, runnable and blocked.
 time.Sleep can be used to block a goroutine. Channel operations are also blocking in nature. 
 When some data is written to the channel, goroutine is blocked until some other goroutine reads it from that channel. 
 At the same time, channel operations tell the scheduler to schedule another goroutine, 
-that’s why a program does n’ot block forever on the same goroutine. 
+that’s why a program does not block forever on the same goroutine. 
 These features of a channel are very useful in goroutines communication as it prevents us from writing manual locks and hacks to make them work with each other.
 
 
 **Some differences between thread and goroutine.**
 
-1. OS threads are managed by kernal and has hardware dependencies. 
+1. OS threads are managed by kernel and has hardware dependencies. 
 Goroutines are managed by go runtime and has no hardware dependencies.
 
 2. OS threads generally have fixed stack size of 1-2MB. 
