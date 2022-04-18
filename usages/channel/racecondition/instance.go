@@ -13,8 +13,7 @@ func worker(wg *sync.WaitGroup) {
 	wg.Done()
 }
 
-// By this case, at any condition, you shouldn’t rely on Go’s scheduling algorithm and implement your own logic
-// to synchronize different goroutines.
+// At any condition, you shouldn’t rely on Go’s scheduling algorithm and implement your own logic to synchronize different goroutines.
 // main is a special goroutine. It won't be 1000, because the program has a race condition.
 // One way to make sure that only one goroutine complete all 3 above steps at a time is by implementing the mutex.
 // Please go to mutex folder to see how to do it in the correct way.

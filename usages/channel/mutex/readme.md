@@ -10,6 +10,11 @@ Once we are done with the operation, we unlock it using mutex.Unlock() method.
 When any other goroutine is trying to read or write value when the lock is present,
 that goroutine will block until the operation is unlocked from the first goroutine. 
 
+sync.RWMutex provides two locking modes:
+Lock/Unlock: Locks/unlocks the data structure in writing mode. Neither writers nor readers will be able to access it.
+RLock/RUnlock: Locks/unlocks the data structure in reading mode. Readers will be able to access it, but not writers. 
+Using this, you can achieve better performance in scenarios with a lot of readers and few writers.
+
 Hence, only 1 goroutine can get to read or write value, avoiding race conditions. 
 
 Remember, any variables present in operations between the lock and unlock will not be available for other goroutines until the whole operations are unlocked.
