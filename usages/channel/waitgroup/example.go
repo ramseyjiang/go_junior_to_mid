@@ -10,8 +10,7 @@ import (
 WaitGroup is opposite to select where you needed only one condition to be true,
 but here you need all conditions to be true in order to unblock the main goroutine.
 
-WaitGroup is a struct with a counter value which tracks how many goroutines were spawned
-and how many have completed their job.
+WaitGroup is a struct with a counter value which tracks how many goroutines were spawned and how many have completed their job.
 This counter when reaches zero, means all goroutines have done their job.
 */
 
@@ -25,7 +24,7 @@ func service(wg *sync.WaitGroup, instance int) {
 }
 
 func main() {
-	var wg sync.WaitGroup // create waitgroup empty struct
+	var wg sync.WaitGroup // create WaitGroup empty struct
 
 	// After for loop has done executing, it still did not pass control to other goroutines.
 	// This is done by calling Wait method on wg like wg.Wait().
