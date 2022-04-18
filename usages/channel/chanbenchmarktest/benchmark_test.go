@@ -13,11 +13,11 @@ func BenchmarkWorker_ProcessSetupTest_10000(b *testing.B) { benchmarkProcess(100
 
 func benchmarkProcess(workerCount int, b *testing.B) {
 	wg := &sync.WaitGroup{}
-	worker := newWorker(workerCount, make(chan int, workerCount), wg)
-	worker.start()
+	testWorker := newWorker(workerCount, make(chan int, workerCount), wg)
+	testWorker.start()
 
 	for i := 0; i < b.N; i++ {
-		worker.process(i)
+		testWorker.process(i)
 	}
 
 	// Stop the worker

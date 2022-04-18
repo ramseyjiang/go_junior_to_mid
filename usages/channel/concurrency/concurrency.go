@@ -13,8 +13,9 @@ type Page struct {
 	Size int
 }
 
-// TriggerConcurrency Before, our program had to request pages one at a time. Goroutines let us start processing the next request while
-// we’re waiting for a website to respond. The program completes in as little as one-third of the time!
+// main Before, our program had to request pages one by one at a time. Goroutines let us start processing the next request,
+// while we’re waiting for a website to respond.
+// The program completes in as little as one-third of the time!
 func main() {
 	pages := make(chan Page) // Make a channel of int values.
 	urls := []string{"https://example.com", "https://golang.org/", "https://google.com"}
@@ -41,10 +42,12 @@ func responseSize(url string, channel chan Page) {
 			fmt.Println(err1)
 		}
 	}(response.Body) // Release the network connection once the main func exits.
+
 	body, err := ioutil.ReadAll(response.Body) // Read all the data in the response.
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	// fmt.Println(string(body)) // Convert the data to a string and print it.
 	channel <- Page{URL: url, Size: len(body)}
 }
