@@ -3,6 +3,8 @@ package stack
 import "math"
 
 // MinStack is a simple struct with two fields. It is a stack with a slice of integers and contains its minimum value.
+// A stack always follows an order Last-In-First-Out (LIFO).
+// The operations to add or take from the stack are called push and pop respectively.
 type MinStack struct {
 	stack []int
 	min   int

@@ -5,23 +5,28 @@ import (
 	"sync"
 )
 
+// Mutexes are allowed to synchronize the access to more complex data structures.
 type counter struct {
-	value int
-	mux   sync.RWMutex // Locks/unlocks the data structure in reading mode.
+	sharedInt int
+	mux       sync.RWMutex // Locks/unlocks the data structure in reading mode.
 }
 
 func (c *counter) increment() {
 	c.mux.Lock()
+
+	// It is important to note that we need to unlock the mutexes after performing the operations.
 	defer c.mux.Unlock()
-	c.value++
+	c.sharedInt++
 }
 
 func (c *counter) getValue() int {
 	// Readers will be able to access it, but not writers.
 	// Using this, you can achieve better performance in scenarios with a lot of readers and few writers.
 	c.mux.RLock()
+
+	// It is important to note that we need to unlock the mutexes after performing the operations.
 	defer c.mux.RUnlock()
-	return c.value
+	return c.sharedInt
 }
 
 func increment(counter *counter, wg *sync.WaitGroup) {

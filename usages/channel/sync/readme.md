@@ -18,3 +18,14 @@ Using this, you can achieve better performance in scenarios with a lot of reader
 Hence, only 1 goroutine can get to read or write value, avoiding race conditions. 
 
 Remember, any variables present in operations between the lock and unlock will not be available for other goroutines until the whole operations are unlocked.
+
+"Do not communicate by sharing memory; instead, share memory by communicating."
+This means that instead of struggling with complex mutex situations in shared memory, use channels to communicate goroutines.
+
+
+1. sync.atomic: Useful when making operations with integers.
+
+2. sync.Mutex and sync.RWMutex: For synchronizing the access to more complex data structures. 
+It’s the classical approach and allows for custom locking.
+
+3. channels: When mutexes are not an option, or it is complicated to operate with them.

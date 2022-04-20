@@ -3,8 +3,15 @@ One way, go run instance.go,
 % go run instance.go
 value of j after 1000 operations is  953
 
-The other way
+The second way
 % go run -race instance.go
+
+The third way
+% go run -race .
+
+**If code occasionally accesses shared variables, it might not be able to detect the race condition. 
+To detect it, the code should run in heavy load, and race conditions must be occurring.**
+
 ==================
 WARNING: DATA RACE
 Read at 0x000100ce55e0 by goroutine 8:
