@@ -26,7 +26,7 @@ var nzHolidays []*holiday
 
 const url = "https://date.nager.at/api/v2/publicholidays/2022/NZ"
 
-func getHolidays() (map[string]string, error) {
+func getHolidays() (map[string]*holiday, error) {
 	resp, _ := http.Get(url)
 	payload, _ := ioutil.ReadAll(resp.Body)
 	err := json.Unmarshal(payload, &nzHolidays)
@@ -34,13 +34,13 @@ func getHolidays() (map[string]string, error) {
 		return nil, err
 	}
 
-	nHolidays := make(map[string]string)
+	nHolidays := make(map[string]*holiday)
 	currentDateStr := time.Now().Format("20060102")
 
 	for _, h := range nzHolidays {
 		strKey := strings.Replace(h.Date, "-", "", 2)
 		if currentDateStr <= strKey && h.Global {
-			nHolidays[strKey] = h.Name
+			nHolidays[strKey] = h
 		}
 	}
 
