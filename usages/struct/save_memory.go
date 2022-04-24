@@ -21,6 +21,7 @@ int32				4 byte
 int64				8 byte
 string				16 byte
 float32				4 byte
+nil interface{}		16 byte
 */
 
 type Employee1 struct {
@@ -59,6 +60,7 @@ var employee3 Employee3
 
 /**
 So, the order is important, but the key point is the space of each element occupy.
+Use unsafe.Sizeof(xxx) to get size of variable.
 */
 func main() {
 	fmt.Printf("Size of %T struct: %d bytes\n", employee1, unsafe.Sizeof(employee1))
