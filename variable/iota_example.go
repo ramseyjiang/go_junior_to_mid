@@ -9,16 +9,16 @@ type OrderStatus int
 
 func main() {
 	const (
-		OrderstatusUnknown OrderStatus = iota // 0
-		OrderstatusNotactive
-		OrderstatusUntriggered
-		OrderstatusTriggered
-		OrderstatusActive = iota - 1
-		OrderstatusCreated
-		OrderstatusRejected
-		OrderstatusTested
+		OrderStatusUnknown OrderStatus = iota // 0
+		OrderStatusNotActive
+		OrderStatusUntriggered
+		OrderStatusTriggered
+		OrderStatusActive = iota - 1
+		OrderStatusCreated
+		OrderStatusRejected
+		OrderStatusTested
 	)
 
-	fmt.Println(OrderstatusUnknown, reflect.TypeOf(OrderstatusNotactive), OrderstatusNotactive, OrderstatusUntriggered, OrderstatusTriggered,
-		OrderstatusActive, OrderstatusCreated, OrderstatusRejected, OrderstatusTested)
+	fmt.Println(OrderStatusUnknown, reflect.TypeOf(OrderStatusNotActive), OrderStatusNotActive, OrderStatusUntriggered, OrderStatusTriggered,
+		OrderStatusActive, OrderStatusCreated, OrderStatusRejected, OrderStatusTested)
 }
