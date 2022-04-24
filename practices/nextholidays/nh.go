@@ -1,10 +1,8 @@
-package main
+package nh
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -26,7 +24,7 @@ var nzHolidays []*holiday
 
 const url = "https://date.nager.at/api/v2/publicholidays/2022/NZ"
 
-func getHolidays() (map[string]*holiday, error) {
+func GetHolidays() (map[string]*holiday, error) {
 	resp, _ := http.Get(url)
 	payload, _ := ioutil.ReadAll(resp.Body)
 	err := json.Unmarshal(payload, &nzHolidays)
@@ -45,13 +43,4 @@ func getHolidays() (map[string]*holiday, error) {
 	}
 
 	return nHolidays, nil
-}
-
-func main() {
-	nHolidays, err := getHolidays()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(nHolidays)
 }
