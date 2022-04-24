@@ -6,6 +6,8 @@ import (
 )
 
 /*
+	Use time.Since(start) to calculate code runtime.
+
 	The only difference between a slice and an array is the missing length between the brackets.
 	Slices are always associated with some array, and although they can never be longer than the array, they can be smaller.
 
