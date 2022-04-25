@@ -6,6 +6,7 @@ import (
 	"log"
 )
 
+// This file uses the Go default Errors, it only includes New(), Is(), As(), Unwrap() methods can be used.
 func main() {
 	// fmt.Errorf inserts values into a format string just like fmt.Printf or fmt.Sprintf, but instead of printing or returning a string, it returns an error value.
 	err2 := fmt.Errorf("A height of %0.2f is invalid", -2.56)
