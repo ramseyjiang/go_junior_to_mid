@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 	"unsafe"
 )
 
@@ -21,7 +22,11 @@ int32				4 byte
 int64				8 byte
 string				16 byte
 float32				4 byte
+uint32				4 byte
+uint64				8 byte
 nil interface{}		16 byte
+time.Time			24 byte	   // it is a struct, so its size is unstable.
+time.Timer			80 byte	   // it is a struct, so its size is unstable.
 */
 
 type Employee1 struct {
@@ -32,6 +37,8 @@ type Employee1 struct {
 	weight    int32
 	height    int16
 	Photo     float32
+	createAt  time.Time
+	updateAt  time.Timer
 }
 
 type Employee2 struct {
@@ -42,6 +49,8 @@ type Employee2 struct {
 	height    int16
 	IsMarried bool
 	IsActive  bool
+	createAt  time.Time
+	updateAt  time.Timer
 }
 
 type Employee3 struct {
@@ -52,6 +61,8 @@ type Employee3 struct {
 	weight    int32
 	height    int16
 	Photo     float32
+	createAt  time.Time
+	updateAt  time.Timer
 }
 
 var employee1 Employee1
