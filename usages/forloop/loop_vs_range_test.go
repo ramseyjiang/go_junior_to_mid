@@ -4,12 +4,18 @@ import "testing"
 
 type U5 struct {
 	a, b, c, d, e int
+	h, i, j, k, l string
+	o, p, q, r, s float32
 }
 type U4 struct {
 	a, b, c, d int
+	h, i, j, k string
+	o, p, q, r float32
 }
 type U3 struct {
 	b, c, d int
+	h, i, j string
+	o, p, q float32
 }
 type U2 struct {
 	c, d int
