@@ -47,7 +47,7 @@ func TestWorkerPool(t *testing.T) {
 	}
 }
 
-func TestWorkerPool_TimeOut(t *testing.T) {
+func TestWorkerPoolTimeOut(t *testing.T) {
 	wp := New(workerCount)
 
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Nanosecond*10)
@@ -69,7 +69,7 @@ func TestWorkerPool_TimeOut(t *testing.T) {
 	}
 }
 
-func TestWorkerPool_Cancel(t *testing.T) {
+func TestWorkerPoolCancel(t *testing.T) {
 	wp := New(workerCount)
 
 	ctx, cancel := context.WithCancel(context.TODO())

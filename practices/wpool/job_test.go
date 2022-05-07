@@ -27,7 +27,7 @@ var (
 	}
 )
 
-func TestJob_execute(t *testing.T) {
+func TestJobExecute(t *testing.T) {
 	type fields struct {
 		descriptor JobDescriptor
 		execFn     ExecutionFn

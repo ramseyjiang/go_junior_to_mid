@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func Test_getHolidays(t *testing.T) {
+func TestGetHolidays(t *testing.T) {
 	nHolidays, err := GetHolidays()
 	currentDateStr := time.Now().Format("20060102")
 	if err != nil {

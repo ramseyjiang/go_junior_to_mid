@@ -22,10 +22,11 @@ type holiday struct {
 
 var nzHolidays []*holiday
 
-const url = "https://date.nager.at/api/v2/publicholidays/2022/NZ"
+const URL = "https://date.nager.at/api/v2/publicholidays/2022/NZ"
+const ymdFmt = "20060102"
 
 func GetHolidays() (map[string]*holiday, error) {
-	resp, _ := http.Get(url)
+	resp, _ := http.Get(URL)
 	payload, _ := ioutil.ReadAll(resp.Body)
 	err := json.Unmarshal(payload, &nzHolidays)
 	if err != nil {
@@ -33,7 +34,7 @@ func GetHolidays() (map[string]*holiday, error) {
 	}
 
 	nHolidays := make(map[string]*holiday)
-	currentDateStr := time.Now().Format("20060102")
+	currentDateStr := time.Now().Format(ymdFmt)
 
 	for _, h := range nzHolidays {
 		strKey := strings.Replace(h.Date, "-", "", 2)

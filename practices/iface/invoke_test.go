@@ -30,7 +30,7 @@ func TestExec(t *testing.T) {
 	})
 }
 
-func TestCoffeePot_TurnOn(t *testing.T) {
+func TestCoffeePotTurnOn(t *testing.T) {
 	var coffeePot Appliance = CoffeePot("LuxBrew")
 	wantCoffeePotOutput := "Hot Chocolate"
 	t.Run("Test CoffeePot Turn On", func(t *testing.T) {
@@ -40,7 +40,7 @@ func TestCoffeePot_TurnOn(t *testing.T) {
 	})
 }
 
-func TestCoffeePot_TurnOff(t *testing.T) {
+func TestCoffeePotTurnOff(t *testing.T) {
 	var coffeePot Appliance = CoffeePot("LuxBrew")
 	wantCoffeePotOutput := "CoffeePot has been turned off."
 	t.Run("Test CoffeePot Turn Off", func(t *testing.T) {
@@ -50,7 +50,7 @@ func TestCoffeePot_TurnOff(t *testing.T) {
 	})
 }
 
-func TestFan_TurnOn(t *testing.T) {
+func TestFanTurnOn(t *testing.T) {
 	var fan Appliance = Fan(1)
 	wantFanOutput := "Today is too hot."
 	t.Run("Test Fan Turn On", func(t *testing.T) {
@@ -60,7 +60,7 @@ func TestFan_TurnOn(t *testing.T) {
 	})
 }
 
-func TestFan_TurnOff(t *testing.T) {
+func TestFanTurnOff(t *testing.T) {
 	var fan Appliance = Fan(0)
 	wantFanOutput := "Fan has been turned off."
 	t.Run("Test Fan Turn Off", func(t *testing.T) {
@@ -70,7 +70,7 @@ func TestFan_TurnOff(t *testing.T) {
 	})
 }
 
-func TestHeater_TurnOn(t *testing.T) {
+func TestHeaterTurnOn(t *testing.T) {
 	heater := New()
 	wantHeaterOutput := "Today is too cold."
 	t.Run("Test Heater Turn On", func(t *testing.T) {
@@ -80,7 +80,7 @@ func TestHeater_TurnOn(t *testing.T) {
 	})
 }
 
-func TestHeater_TurnOff(t *testing.T) {
+func TestHeaterTurnOff(t *testing.T) {
 	heater := New()
 	wantHeaterOutput := "Heater has been turned off."
 	t.Run("Test Heater Turn Off", func(t *testing.T) {
