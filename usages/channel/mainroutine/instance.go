@@ -5,6 +5,8 @@ import (
 	"sync"
 )
 
+// go tool compile -S instance.go >> instance.C
+// The above is the command generate disassembly file
 func main() {
 	firstCase()
 	correctCase()
