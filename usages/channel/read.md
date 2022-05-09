@@ -84,3 +84,22 @@ Goroutine do not have any identity. Go implemented this because go does not have
 
 7. Threads are preemptively scheduled. Switching cost between threads is high as scheduler needs to save/restore more than 50 registers and states. This can be quite significant when there is rapid switching between threads.	
 Goroutines are coopertively scheduled (read more). When a goroutine switch occurs, only 3 registers need to be saved or restored.
+
+
+Go manages goroutines at two levels, local queues and global queues. Local queues are attached to each processor, while the global queue is common.
+Goroutines do not go in the global queue only when the local queue is full, and they are also pushed in it when Go injects a list of goroutines to the scheduler.
+
+When a processor does not have any Goroutines, it applies the following rules in this order:
+1. pull work from the own local queue
+2. pull work from network poller
+3. steal work from the other processor's local queue
+4. pull work from the global queue
+
+Since a processor can pull work from the global queue when it runs out of tasks, the first available P will run the goroutine. 
+This behavior explains why a goroutine runs on different P and shows how Go optimizes the system by letting other goroutines run when a resource is free.
+
+![img.png](img.png)
+
+In this diagram, you can see that P1 ran out of goroutines. So the Go's runtime scheduler will take goroutines from other processors. 
+If every other processor run queue is empty, it checks for completed IO requests (syscalls, network requests) from the netpoller. 
+If this netpoller is empty, the processor will try to get goroutines from the global run queue.
