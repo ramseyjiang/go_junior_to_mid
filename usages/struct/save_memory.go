@@ -17,16 +17,20 @@ is the same as a cpu maximum process ability of each clock cycle.
 In golang, data type and size list is following:
 Data Type 			Size
 bool				1 byte
-int16				2 byte
-int32				4 byte
-int64				8 byte
-string				16 byte
-float32				4 byte
-uint32				4 byte
-uint64				8 byte
-nil interface{}		16 byte
-time.Time			24 byte	   // it is a struct, so its size is unstable.
-time.Timer			80 byte	   // it is a struct, so its size is unstable.
+int16				2 bytes
+int32				4 bytes
+int64				8 bytes
+int					8 bytes
+string				16 bytes
+float32				4 bytes
+float64				8 bytes
+uint32				4 bytes
+uint64				8 bytes
+nil interface{}		16 bytes
+time.Time			24 bytes   // it is a struct, so its size is unstable.
+time.Timer			80 bytes   // it is a struct, so its size is unstable.
+time.Duration		8 bytes
+[]byte				24 bytes
 */
 
 type Employee1 struct {
@@ -36,33 +40,45 @@ type Employee1 struct {
 	Name      string
 	weight    int32
 	height    int16
-	Photo     float32
+	PhotoWid  float32
+	PhotoLen  float64
+	intNum    int
 	createAt  time.Time
 	updateAt  time.Timer
+	timeout   time.Duration
+	jsonStr   []byte
 }
 
 type Employee2 struct {
 	Name      string
 	Age       int64
-	Photo     float32
+	intNum    int
+	PhotoWid  float32
+	PhotoLen  float64
 	weight    int32
 	height    int16
 	IsMarried bool
 	IsActive  bool
 	createAt  time.Time
 	updateAt  time.Timer
+	timeout   time.Duration
+	jsonStr   []byte
 }
 
 type Employee3 struct {
 	Name      string
 	IsActive  bool
+	intNum    int
 	Age       int64
 	IsMarried bool
 	weight    int32
 	height    int16
-	Photo     float32
+	PhotoWid  float32
+	PhotoLen  float64
 	createAt  time.Time
 	updateAt  time.Timer
+	timeout   time.Duration
+	jsonStr   []byte
 }
 
 var employee1 Employee1
@@ -71,9 +87,10 @@ var employee3 Employee3
 
 /**
 So, the order is important, but the key point is the space of each element occupy.
-Use unsafe.Sizeof(xxx) to get size of variable.
+Use fmt.Println(unsafe.Sizeof(employee1.xxx)) to get size of variable, if unsafe.Sizeof() does not in fmt.xxx, it won't work.
 */
 func main() {
+
 	fmt.Printf("Size of %T struct: %d bytes\n", employee1, unsafe.Sizeof(employee1))
 	fmt.Printf("Size of %T struct: %d bytes\n", employee2, unsafe.Sizeof(employee2))
 	fmt.Printf("Size of %T struct: %d bytes\n", employee3, unsafe.Sizeof(employee3))
