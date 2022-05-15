@@ -84,14 +84,10 @@ func main() {
 // func decodeServerJson(str string) {
 // 	server := ServerConf{}
 //
-// 	// While decoding the json byte using unmarshal.
-// 	// the first argument is the json byte slice, function unmarshal only accept json data type []byte
-// 	// the second argument is the address of the response type struct where we want the json to be mapped to
 // 	if err := json.Unmarshal([]byte(str), &server); err != nil {
 // 		panic(err)
 // 	}
 //
 // 	log.Println("Json decode usage is as below:")
-// 	log.Println(server) // res type is defined in the struct at the top.
-// 	// log.Printf("Page is %v, fruits are %v\n", res.PageNumber, res.Fruits)
+// 	log.Println(server)
 // }
