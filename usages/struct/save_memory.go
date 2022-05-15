@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"time"
 	"unsafe"
 )
@@ -91,9 +91,9 @@ So, the order is important, but the key point is the space of each element occup
 Use fmt.Println(unsafe.Sizeof(employee1.xxx)) to get size of variable, if unsafe.Sizeof() does not in fmt.xxx, it won't work.
 */
 func main() {
-	log.Printf("Size of %T struct: %d bytes\n", employee1, unsafe.Sizeof(employee1))
+	fmt.Printf("Size of %T struct: %d bytes\n", employee1, unsafe.Sizeof(employee1))
 
-	log.Printf("Size of %T struct: %d bytes\n", employee2, unsafe.Sizeof(employee2))
+	fmt.Printf("Size of %T struct: %d bytes\n", employee2, unsafe.Sizeof(employee2))
 
-	log.Printf("Size of %T struct: %d bytes\n", employee3, unsafe.Sizeof(employee3))
+	fmt.Printf("Size of %T struct: %d bytes\n", employee3, unsafe.Sizeof(employee3))
 }
