@@ -7,7 +7,7 @@ import (
 )
 
 /**
-We know that CPU 32-bit and CPU 64-bit are the most popular types of CPU.
+CPU 32-bit and CPU 64-bit are the most popular types of CPU.
 Imagine that we have a CPU 64-bit, the CPU has transfer capability 64-bit data per clock cycle.
 The clock cycle is how much time needed for CPU to process an information.
 
