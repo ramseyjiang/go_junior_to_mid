@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"time"
 	"unsafe"
 )
@@ -40,9 +40,10 @@ type Employee1 struct {
 	Name      string
 	weight    int32
 	height    int16
-	PhotoWid  float32
 	PhotoLen  float64
+	PhotoWid  float32
 	intNum    int
+	length    int8
 	createAt  time.Time
 	updateAt  time.Timer
 	timeout   time.Duration
@@ -53,10 +54,11 @@ type Employee2 struct {
 	Name      string
 	Age       int64
 	intNum    int
-	PhotoWid  float32
 	PhotoLen  float64
+	PhotoWid  float32
 	weight    int32
 	height    int16
+	length    int8
 	IsMarried bool
 	IsActive  bool
 	createAt  time.Time
@@ -69,6 +71,7 @@ type Employee3 struct {
 	Name      string
 	IsActive  bool
 	intNum    int
+	length    int8
 	Age       int64
 	IsMarried bool
 	weight    int32
@@ -90,8 +93,9 @@ So, the order is important, but the key point is the space of each element occup
 Use fmt.Println(unsafe.Sizeof(employee1.xxx)) to get size of variable, if unsafe.Sizeof() does not in fmt.xxx, it won't work.
 */
 func main() {
+	log.Printf("Size of %T struct: %d bytes\n", employee1, unsafe.Sizeof(employee1))
 
-	fmt.Printf("Size of %T struct: %d bytes\n", employee1, unsafe.Sizeof(employee1))
-	fmt.Printf("Size of %T struct: %d bytes\n", employee2, unsafe.Sizeof(employee2))
-	fmt.Printf("Size of %T struct: %d bytes\n", employee3, unsafe.Sizeof(employee3))
+	log.Printf("Size of %T struct: %d bytes\n", employee2, unsafe.Sizeof(employee2))
+
+	log.Printf("Size of %T struct: %d bytes\n", employee3, unsafe.Sizeof(employee3))
 }
