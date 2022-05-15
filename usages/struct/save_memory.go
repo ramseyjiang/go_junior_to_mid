@@ -33,6 +33,13 @@ time.Duration		8 bytes
 []byte				24 bytes
 */
 
+type commonStruct struct {
+	createAt time.Time
+	updateAt time.Timer
+	timeout  time.Duration
+	jsonStr  []byte
+}
+
 type Employee1 struct {
 	IsActive  bool
 	Age       int64
@@ -44,10 +51,7 @@ type Employee1 struct {
 	PhotoWid  float32
 	intNum    int
 	length    int8
-	createAt  time.Time
-	updateAt  time.Timer
-	timeout   time.Duration
-	jsonStr   []byte
+	common    commonStruct
 }
 
 type Employee2 struct {
@@ -61,10 +65,7 @@ type Employee2 struct {
 	length    int8
 	IsMarried bool
 	IsActive  bool
-	createAt  time.Time
-	updateAt  time.Timer
-	timeout   time.Duration
-	jsonStr   []byte
+	common    commonStruct
 }
 
 type Employee3 struct {
@@ -78,10 +79,7 @@ type Employee3 struct {
 	height    int16
 	PhotoWid  float32
 	PhotoLen  float64
-	createAt  time.Time
-	updateAt  time.Timer
-	timeout   time.Duration
-	jsonStr   []byte
+	common    commonStruct
 }
 
 var employee1 Employee1
