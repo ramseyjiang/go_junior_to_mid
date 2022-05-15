@@ -1,25 +1,26 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"time"
 )
 
 var sort = AnswerForInit()
 
-func AnswerForInit() int { // 1
-	fmt.Println("AnswerForInit run time is", time.Now())
-	return 42
+func AnswerForInit() int8 { // 1
+	log.Printf("AnswerForInit run time is %10s %s\n", "", time.Now())
+	return 1
 }
 
+// init() is the go default keyword, if change it to Init(), it won't run before main()
 func init() { // 2
-	fmt.Println("Init run time is", time.Now())
-	sort = 0
+	log.Printf("Init run time is %19s %s\n", "", time.Now())
+	log.Println(sort)
+	sort = 2
 }
 
-func main() { // 3
-	fmt.Println("Main run time is", time.Now())
-	if sort == 0 {
-		fmt.Println("It's all a lie.")
-	}
+func main() { // 0
+	log.Printf("Main run time is %19s %s\n", "", time.Now())
+
+	log.Println(sort)
 }
