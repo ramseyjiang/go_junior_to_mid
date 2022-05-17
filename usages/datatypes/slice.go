@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -85,27 +86,26 @@ func trickSlice() {
 	newNumbersB := numbers[1:4]
 
 	numbers[2] = 10
-	fmt.Println(newNumbersA, numbers, newNumbersB)
+	log.Println(newNumbersA, numbers, newNumbersB)
 
 	newNumbersA[3] = 50
-	fmt.Println(newNumbersA, numbers, newNumbersB)
+	log.Println(newNumbersA, numbers, newNumbersB)
 
 	newNumbersB[1] = 30
-	fmt.Println(newNumbersA, numbers, newNumbersB)
+	log.Println(newNumbersA, numbers, newNumbersB)
 
-	// On the above, newNumbersA and newNumbersB are using the same original array, that's why update one,
-	// then others results are changed.
+	// On the above, newNumbersA and newNumbersB are using the same original array, that's why update one, others results are changed.
 	// newNumbersC is defined using append, and it appends to a new slice, so it is changed, it won't change the original slice.
 	newNumbersC := append([]int{}, numbers...)
-	fmt.Println(newNumbersC)
+	log.Println(newNumbersC)
 	newNumbersB[1] = 20
-	fmt.Println(newNumbersA, numbers, newNumbersB, newNumbersC)
+	log.Println(newNumbersA, numbers, newNumbersB, newNumbersC)
 }
 
 func efficiencySlice() {
-	start := time.Now()
 	inputSlice := [6]int{0, 1, 2, 3, 4, 5}
 
+	execTime := time.Now()
 	var sum int
 	var firstSlice []int
 	for sum = 0; sum < 100000; sum++ {
@@ -113,26 +113,23 @@ func efficiencySlice() {
 			firstSlice = append(firstSlice, v)
 		}
 	}
-	elapsed1 := time.Since(start)
-	fmt.Println(elapsed1, len(firstSlice))
+	fmt.Println(time.Since(execTime), len(firstSlice))
 
-	start = time.Now()
+	execTime = time.Now()
 	secondSlice := make([]int, len(firstSlice))
 	for sum = 0; sum < 100000; sum++ {
 		for i, v := range inputSlice {
 			secondSlice[i] = v
 		}
 	}
-	elapsed2 := time.Since(start)
-	fmt.Println(elapsed2, len(secondSlice))
+	fmt.Println(time.Since(execTime), len(secondSlice))
 
-	start = time.Now()
+	execTime = time.Now()
 	thirdSlice := make([]int, 0, len(firstSlice))
 	for sum = 0; sum < 100000; sum++ {
 		for _, v := range inputSlice {
 			thirdSlice = append(thirdSlice, v)
 		}
 	}
-	elapsed3 := time.Since(start)
-	fmt.Println(elapsed3, len(secondSlice))
+	fmt.Println(time.Since(execTime), len(secondSlice))
 }

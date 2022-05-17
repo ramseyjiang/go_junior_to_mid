@@ -11,16 +11,19 @@ func main() {
 	base()
 
 	str0 := withoutStringsBuilderWithFmt()
-	log.Println(str0)
+	fmt.Println(str0)
 
-	str1 := withoutStringsBuilder()
-	log.Println(str1)
+	str1 := withoutStringsBuilderWithLog()
+	fmt.Println(str1)
 
 	str2 := stringsBuilderWithForRange()
-	log.Println(str2)
+	fmt.Println(str2)
 
 	str3 := stringBuilderWithForLoop()
-	log.Println(str3)
+	fmt.Println(str3)
+
+	str4 := withSprintfWithLog()
+	fmt.Println(str4)
 }
 
 func withoutStringsBuilderWithFmt() (allStr string) {
@@ -29,17 +32,27 @@ func withoutStringsBuilderWithFmt() (allStr string) {
 	for _, str := range s { // change to for loop
 		allStr += str
 	}
-	fmt.Printf("withoutStringsBuilderWithFmt ExecTime is %33s %6s\n", "->", time.Since(execTime))
+	fmt.Printf("withoutStringsBuilderWithFmt ExecTime is %40s %6s\n", "->", time.Since(execTime))
 	return
 }
 
-func withoutStringsBuilder() (allStr string) {
+func withSprintfWithLog() (allStr string) {
+	execTime := time.Now()
+	s := [5]string{"one", "two", "3", "4", "five"}
+	for _, str := range s { // change to for loop
+		allStr += fmt.Sprintf("%s", str)
+	}
+	log.Printf("withSprintfWithLog ExecTime is %23s %6s\n", "->", time.Since(execTime))
+	return
+}
+
+func withoutStringsBuilderWithLog() (allStr string) {
 	execTime := time.Now()
 	s := [5]string{"one", "two", "3", "4", "five"}
 	for _, str := range s { // change to for loop
 		allStr += str
 	}
-	log.Printf("withoutStringsBuilder ExecTime is %20s %6s\n", "->", time.Since(execTime))
+	log.Printf("withoutStringsBuilderWithLog ExecTime is %13s %6s\n", "->", time.Since(execTime))
 	return
 }
 
@@ -54,7 +67,7 @@ func stringBuilderWithForLoop() (str string) {
 	}
 	log.Printf("stringBuilderWithForLoop ExecTime is %17s %6s\n", "->", time.Since(execTime))
 
-	log.Printf("Last %28s Len : %3d, Cap : %3d, ptr : %3p\n", " ", sb.Len(), sb.Cap(), &sb)
+	// log.Printf("Last %28s Len : %3d, Cap : %3d, ptr : %3p\n", " ", sb.Len(), sb.Cap(), &sb)
 
 	return sb.String()
 }
@@ -74,18 +87,18 @@ func stringsBuilderWithForRange() (str string) {
 
 	// str = sb.String()
 	sb.Reset()
-	log.Printf("After reset %21s Len : %3d, Cap : %3d, ptr : %3p\n", " ", sb.Len(), sb.Cap(), &sb)
+	// log.Printf("After reset %21s Len : %3d, Cap : %3d, ptr : %3p\n", " ", sb.Len(), sb.Cap(), &sb)
 	return sb.String()
 }
 
 func base() {
 	s := "this is a string"
-	log.Printf("%v, %T\n", s, s) // this is a string, string
+	fmt.Printf("%v, %T\n", s, s) // this is a string, string
 
-	log.Printf("%v, %T\n", s[2], s[2]) // 105, uint8. Because it should do the type convert first
+	fmt.Printf("%v, %T\n", s[2], s[2]) // 105, uint8. Because it should do the type convert first
 
-	log.Printf("%v, %T\n", string(s[2]), string(s[2])) // i, string
+	fmt.Printf("%v, %T\n", string(s[2]), string(s[2])) // i, string
 
 	b := []byte(s)
-	log.Printf("%v, %T\n", b, b) // [116 104 105 115 32 105 115 32 97 32 115 116 114 105 110 103], []uint8
+	fmt.Printf("%v, %T\n", b, b) // [116 104 105 115 32 105 115 32 97 32 115 116 114 105 110 103], []uint8
 }
