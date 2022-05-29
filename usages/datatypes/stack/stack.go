@@ -25,6 +25,9 @@ func (ms *MinStack) Push(item int) {
 
 // Pop is used to remove the last element from the stack and save its value in variable last
 func (ms *MinStack) Pop() {
+	if ms.IsEmpty() {
+		return
+	}
 	length := len(ms.stack)
 	last := ms.stack[length-1]
 	ms.stack = ms.stack[:length-1]
@@ -40,6 +43,13 @@ func (ms *MinStack) Pop() {
 			ms.min = x
 		}
 	}
+}
+
+func (ms *MinStack) IsEmpty() bool {
+	if len(ms.stack) == 0 {
+		return true
+	}
+	return false
 }
 
 func (ms *MinStack) GetLastElement() int {

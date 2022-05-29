@@ -78,4 +78,16 @@ func TestMinStack(t *testing.T) {
 		}
 	})
 	// fmt.Println("MinStack content after pop is: ", ms.stack)
+
+	for i := 0; i <= len(ms.stack); i++ {
+		if ms.IsEmpty() == false {
+			ms.Pop()
+		}
+	}
+	wantEmptyStack := make([]int, 0)
+	t.Run("Test IsEmpty() stack", func(t *testing.T) {
+		if got := ms.stack; !reflect.DeepEqual(got, wantEmptyStack) {
+			t.Errorf("execute() = %v, want %v", got, wantEmptyStack)
+		}
+	})
 }
