@@ -9,7 +9,7 @@ import (
 
 func TestGetHolidays(t *testing.T) {
 	nHolidays, err := GetHolidays()
-	currentDateStr := time.Now().Format("20060102")
+	currentDateStr := time.Now().Format(ymdFmt)
 	if err != nil {
 		log.Fatal(err)
 	}

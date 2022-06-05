@@ -2,8 +2,9 @@ package nh
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -22,18 +23,24 @@ type holiday struct {
 
 var nzHolidays []*holiday
 
-const URL = "https://date.nager.at/api/v2/publicholidays/2022/NZ"
+const URL = "https://date.nager.at/api/v2/publicholidays/"
 const ymdFmt = "20060102"
+const jointStr = "/"
+const sep = ""
 
-func GetHolidays() (map[string]*holiday, error) {
-	resp, _ := http.Get(URL)
-	payload, _ := ioutil.ReadAll(resp.Body)
-	err := json.Unmarshal(payload, &nzHolidays)
+func GetHolidays() (nHolidays map[string]*holiday, err error) {
+	t := time.Now()
+	year := t.Year()
+	reqParams := []string{URL, strconv.Itoa(year), jointStr, "NZ"}
+	reqURL := strings.Join(reqParams, sep)
+	resp, _ := http.Get(reqURL)
+	payload, _ := io.ReadAll(resp.Body)
+	err = json.Unmarshal(payload, &nzHolidays)
 	if err != nil {
 		return nil, err
 	}
 
-	nHolidays := make(map[string]*holiday)
+	nHolidays = make(map[string]*holiday)
 	currentDateStr := time.Now().Format(ymdFmt)
 
 	for _, h := range nzHolidays {
@@ -43,5 +50,5 @@ func GetHolidays() (map[string]*holiday, error) {
 		}
 	}
 
-	return nHolidays, nil
+	return
 }
