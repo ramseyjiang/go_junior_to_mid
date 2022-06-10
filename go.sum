@@ -1,3 +1,5 @@
+github.com/brianvoe/gofakeit/v6 v6.16.0 h1:EelCqtfArd8ppJ0z+TpOxXH8sVWNPBadPNdCDSMMw7k=
+github.com/brianvoe/gofakeit/v6 v6.16.0/go.mod h1:Ow6qC71xtwm79anlwKRlWZW6zVq9D2XHE4QSSMP/rU8=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/ramseyjiang/go_mid_to_senior v0.0.0-20220509090836-ad68c14de40f h1:XIq003ho9W9I0ZJXelWQ6IgOqspyXa38ddf0aEPlEH0=
