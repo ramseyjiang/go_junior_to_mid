@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"time"
+
+	"golang.org/x/exp/slices"
 )
 
 /*
@@ -42,6 +44,7 @@ func main() {
 	trickSlice()
 
 	efficiencySlice()
+	inSlice()
 }
 
 /*
@@ -132,4 +135,10 @@ func efficiencySlice() {
 		}
 	}
 	fmt.Println(time.Since(execTime), len(secondSlice))
+}
+
+func inSlice() {
+	strings := []string{"a", "b", "c"}
+	str := "a"
+	log.Println(slices.Contains(strings, str))
 }
