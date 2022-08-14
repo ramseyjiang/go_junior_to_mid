@@ -9,7 +9,7 @@ import (
 )
 
 func scanDir(path string) error {
-	fmt.Println(path) // print the current directory.
+	log.Println("Current scan directory is:", path) // print the current directory.
 	// Get a slice with the directory's contents
 	files, err := ioutil.ReadDir(path)
 	if err != nil {
@@ -34,8 +34,7 @@ func scanDir(path string) error {
 
 /**
 Using the below command to run this file.
-go run base/usages/files/files.go base/usages
-go run base/usages/files/files.go base
+go run usages/files/listfiles.go usages
 */
 func main() {
 	err := scanDir(os.Args[1])
