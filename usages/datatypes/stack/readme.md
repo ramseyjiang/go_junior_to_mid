@@ -1,9 +1,10 @@
 A running program will store objects in two memory locations, the heap and the stack.
 
-Garbage collection operates on the heap, not the stack. The stack is a LIFO data structure that stores function values.
+Garbage collection operates on the heap, not the stack. 
+The stack is a LIFO data structure that stores function values.
 
-Calling another function from within a function pushes a new frame onto the stack, 
-which will contain the values of that function and so on. When the called function returns, its stack frame is popped off the stack.
+Calling another function from within a function pushes a new frame onto the stack, which will contain the values of that function and so on. 
+When the called function returns, its stack frame is popped off the stack.
 
 In contrast, the heap contains values that are referenced outside a function.
 For example, statically defined constants at the start of a program, or more complex objects, like Go structs.
@@ -17,17 +18,14 @@ if an object “escapes” the function.
 
 If the compiler can determine a variable lifetime, it will be allocated to a stack. 
 However, if the variable’s lifetime is unclear it will be allocated on the heap.
-Generally if a Go program has a pointer to an object then that object is stored on the heap.
 
-GOGC controls the aggressiveness of the garbage collector.
+# **Generally if a Go program has a pointer to an object then that object is stored on the heap.**
 
-Go compiler tries to determine a variable’s lifetime and size. 
-If it succeeds, then it will be allocated to a stack frame. 
+# **Go compiler tries to determine a variable’s lifetime and size. If it succeeds, then it will be allocated to a stack frame.** 
 Stack frames are individual memory spaces for each function call, 
-this means that Go has a stack per function, and when possible, Go will allocate variables to this stack.
+this means that **Go has a stack per function, and when possible, Go will allocate variables to this stack.**
 
-Determining the variable lifetime is done by escape analysis, 
-it chases across functions and packages to check if the memory should be allocated to a heap or stack.
+# **Escape analysis, it chases across functions and packages to check if the memory should be allocated to a heap or stack.**
 
 Go GC means Go Garbage collectors. GC has two key parts, a mutator, and a collector.
 The collector executes garbage collection logic and finds objects that should have their memory freed.
@@ -38,33 +36,35 @@ It also updates existing objects on the heap as the program runs,
 which includes making some objects unreachable when they’re no longer needed.
 The mutator is the initial phase before any garbage collecting where the heap allocation happens.
 
-Go’s garbage collector is a non-generational concurrent, tri-color mark and sweep garbage collector.
+# Generally, the mutator is utilised to assign objects into the heap and clear unused objects in the heap.
 
-1.non-generational concurrent
+Go’s garbage collector is a non-generational, concurrent, tri-color mark and sweep garbage collector.
+
+1.Non-generational
 A generational garbage collector focuses on recently allocated objects.
 Compiler optimisations allow the Go compiler to allocate objects with a known lifetime to the stack.
 This means fewer objects will be on the heap, so fewer objects will be garbage collected.
-This means that a generational garbage collector is not necessary in Go.
-So, Go uses a non-generational garbage collector.
+# **It means a generational garbage collector is not necessary in Go. So, Go uses a non-generational garbage collector.**
 
-Concurrent means that the collector runs at the same time as mutator threads.
+2.Concurrent:the collector runs at the same time as mutator threads.
 
 That's why Go uses a non-generational concurrent garbage collector.
 
-2. Mark and sweep is the type of garbage collector
+3.Mark and sweep is the type of garbage collector
 The algorithm has two phases, marking and sweeping.
-In the mark phase, the garbage will be detected in the heap and marks objects that are no longer needed.
-In the sweep phase, the garbage will be removed.
+In the mark phase, the collector traverses the heap and marks objects that are no longer needed.
+In the sweep phase, these objects will be removed.
 Mark and sweep is an indirect algorithm, as it marks live objects, and removes everything else.
-They are not direct, it means that the mark does not mark the garbage, it will mark the non-garbage. 
-The sweep will remove everything, but not non-garbage.
+They are indirect, make live objects and removes everything else.
 
-Implementation steps :
-Stop the world (STW) is the crucial phase to check memory status, 
-it actually means stopping the running goroutines and turn write barrier on so that data on heap can be maintained.
-Once all goroutines has writing barriers on, the world will be started, and the workers will perform the garbage collection.
+Implementation mark and sweep steps:
+Go has all goroutines reach a garbage collection safe point with a process called **stop the world.**
+This temporarily stops the program from running and turns write barriers on to maintain data integrity on the heap.
+This allows for concurrency by allowing goroutines and the collector to run simultaneously.
 
-3.  tri-color algorithm
+Once all goroutines has writing barriers on, the Go runtime **starts the world** and has workers perform the garbage collection work.
+
+**tri-color algorithm**
 Marking is implemented by using a tri-color algorithm.
 The algorithm divides objects in the heap into three sets according to the color assigned, black, white, and gray.
 
