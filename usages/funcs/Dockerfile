@@ -1,6 +1,7 @@
 #docker build -t optional_params:v3 .
 #docker run -it --rm optional_params:v3
 #docker images | grep optional_params
+# All above after ":". they are the tag name of docker, the tag name can none.
 
 FROM golang:alpine AS builder
 WORKDIR /build
