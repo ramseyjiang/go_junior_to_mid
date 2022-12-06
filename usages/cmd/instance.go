@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -14,11 +13,19 @@ func main() {
 }
 
 func outputVersionPath() {
+	// LookPath can be used to check whether the cmd exists or not.
+	checkCmd, err := exec.LookPath("la")
+	if err != nil { // it will output "Error:  exec: "la": executable file not found in $PATH"
+		log.Println("Error: ", err)
+	} else {
+		log.Println("Check la path is ", checkCmd)
+	}
+
 	goExecPath, err := exec.LookPath("go")
 	if err != nil {
-		fmt.Println("Error: ", err)
+		log.Println("Error: ", err)
 	} else {
-		fmt.Println("Go Executable: ", goExecPath)
+		log.Println("Go Executable: ", goExecPath)
 	}
 
 	// created a basic Cmd struct which points to standard Go executable path.
@@ -31,13 +38,18 @@ func outputVersionPath() {
 		Stderr: os.Stdout,
 	}
 
+	nameEnv := "NAME=golang"
+	ageEnv := "AGE=13"
+	newEnv := append(os.Environ(), nameEnv, ageEnv)
+	cmdGoVersion.Env = newEnv
+
 	// Print cmdGoVersion struct, but not run
 	// fmt.Println(cmdGoVersion.String())
 
 	// run the cmdGoVersion, it is the Cmd.Run method runs the command and throws an error if the command could not successfully run.
 	// This error does not contain standard output.
 	if err1 := cmdGoVersion.Run(); err1 != nil {
-		fmt.Println("Error:", err) // the standard output is: go version go1.18 darwin/arm64
+		log.Println("Error:", err) // the standard output is: go version go1.18 darwin/arm64
 	}
 }
 
@@ -49,5 +61,5 @@ func cmdStartWait() {
 	}
 	log.Printf("Waiting for command to finish...")
 	_ = cmd.Wait()
-	fmt.Println("Hello CMD")
+	log.Println("Hello CMD")
 }
