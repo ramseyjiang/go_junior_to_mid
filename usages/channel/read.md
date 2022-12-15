@@ -103,3 +103,14 @@ This behavior explains why a goroutine runs on different P and shows how Go opti
 In this diagram, you can see that P1 ran out of goroutines. So the Go's runtime scheduler will take goroutines from other processors. 
 If every other processor run queue is empty, it checks for completed IO requests (syscalls, network requests) from the netpoller. 
 If this netpoller is empty, the processor will try to get goroutines from the global run queue.
+
+
+“Concurrency is about structure and parallelism is about execution. In other words, concurrency is a way to structure a thing so that you can (maybe) use parallelism to do a better job.” — Rob Pike
+
+CPU-bound workloads(受CPU限制的工作负载)
+It won’t show any performance improvement
+if we run it in a single core with multiple goroutines as the go runtime will waste valuable time scheduling goroutines in and out,
+also known as context switching.
+
+I/O-bound workloads(受IO限制的工作负载)
+We need to be careful not to spawn more goroutines than cores available to avoid losing performance.
