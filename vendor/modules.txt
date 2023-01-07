@@ -1,0 +1,12 @@
+# github.com/brianvoe/gofakeit/v6 v6.16.0
+## explicit; go 1.17
+# github.com/pkg/errors v0.9.1
+## explicit
+github.com/pkg/errors
+# github.com/ramseyjiang/go_mid_to_senior v0.0.0-20220509090836-ad68c14de40f
+## explicit; go 1.18
+github.com/ramseyjiang/go_mid_to_senior/customizepkgs/keyboard
+# golang.org/x/exp v0.0.0-20220713135740-79cabaa25d75
+## explicit; go 1.18
+golang.org/x/exp/constraints
+golang.org/x/exp/slices

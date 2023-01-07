@@ -19,3 +19,7 @@ Dynamic size variables are in heap, static(not always change size) variables are
 
 go tool compile -m example.go
 The above command is used to check Golang’s memory escape behavior.
+
+When using reflection in Golang, it involves introspection and manipulation of values at runtime, rather than at compile time.
+The Go runtime must perform additional work to determine the type and structure of the reflected value, 
+which can add overhead and slow down the program.
