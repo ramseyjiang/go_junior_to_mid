@@ -32,11 +32,11 @@ import (
 */
 func main() {
 	arr := [3]int64{1, 2, 3}
-	x := arr[0:2]  // It means x includes the first 5 elements in arr.
+	x := arr[0:2]  // It means x includes the first 2 elements in arr.
 	fmt.Println(x) // [1 2]
 
-	slice := appendSlice(x, arr)
-	fmt.Println("append alice results: ", slice) // [1 2 7 4 5]
+	slice4, slice5 := appendSlice(x, arr)
+	fmt.Println(slice4, slice5) // [1 2 7 4 5] [0 0 0 1 2 7 4 5]
 
 	slice1, slice2, slice3 := copySlice()
 	fmt.Println(slice1, slice2, slice3) // [1 2 3 4] [1 2 3] 3
@@ -53,19 +53,17 @@ func main() {
 	the element is placed after the last element and the length is incremented.
 	However, if there is not enough capacity, a new array is created, all of existing elements are
 */
-func appendSlice(slice []int64, arr [3]int64) []int64 {
+func appendSlice(slice []int64, arr [3]int64) (slice1 []int64, slice2 []int64) {
 	arr1 := make([]int64, 0, len(arr))
 	arr2 := make([]int64, len(arr))
 
 	slice = append(slice, 7)
 	slice = append(slice, 4, 5)
 
-	slice1 := append(arr1, slice...)
-	fmt.Println("arr1 append result is ", slice1) // [0 0 0 1 2 7 4 5]
-	slice2 := append(arr2, slice...)
-	fmt.Println("arr2 append result is ", slice2) // [1 2 7 4 5]
+	slice1 = append(arr1, slice...) // [0 0 0 1 2 7 4 5]
+	slice2 = append(arr2, slice...) // [1 2 7 4 5]
 
-	return slice
+	return slice1, slice2
 }
 
 /*
@@ -78,7 +76,6 @@ func copySlice() ([]int, []int, int) {
 
 	// copy() returns the number of elements copied, which will be the minimum of len(src) and len(dst).
 	slice3 := copy(slice2, slice1)
-	fmt.Println(slice1, slice2, slice3)
 
 	return slice1, slice2, slice3
 }
