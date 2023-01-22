@@ -22,7 +22,7 @@ type subscriber struct {
 type employee struct {
 	name    string
 	salary  float64
-	address // This way is the anonymousgoroutine struct fields.
+	address // This way is the anonymous goroutine struct fields.
 }
 
 type address struct {
