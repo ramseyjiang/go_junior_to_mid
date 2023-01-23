@@ -52,10 +52,9 @@ That's why Go uses a non-generational concurrent garbage collector.
 
 3.Mark and sweep is the type of garbage collector
 The algorithm has two phases, marking and sweeping.
-In the mark phase, the collector traverses the heap and marks objects that are no longer needed.
-In the sweep phase, these objects will be removed.
+In the mark phase, the collector traverses the heap and marks live objects.
+In the sweep phase, these unmarked objects will be removed.
 Mark and sweep is an indirect algorithm, as it marks live objects, and removes everything else.
-They are indirect, make live objects and removes everything else.
 
 Implementation mark and sweep steps:
 Go has all goroutines reach a garbage collection safe point with a process called **stop the world.**
