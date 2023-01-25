@@ -69,7 +69,7 @@ These features of a channel are very useful in goroutines communication as it pr
 Goroutines are managed by go runtime and has no hardware dependencies.
 
 2. OS threads generally have fixed stack size of 1-2MB. 
-Goroutines typically have 8KB (2KB since Go 1.4) of stack size in newer versions of go.
+Goroutines typically have 2KB (since Go 1.4) of stack size in newer versions of go.
 
 3. Stack size is determined during compile time and can not grow. 
 Stack size of go is managed in run-time and can grow up to 1GB which is possible by allocating and freeing heap storage
@@ -83,7 +83,7 @@ Goroutine do not have any identity. Go implemented this because go does not have
 6. Threads have significant setup and teardown cost as a thread has to request lots of resources from OS and return once it's done.	Goroutines are created and destroyed by the go's runtime. These operations are very cheap compared to thread as go runtime already maintain pool of threads for goroutines. In this case OS is not aware of goroutines.
 
 7. Threads are preemptively scheduled. Switching cost between threads is high as scheduler needs to save/restore more than 50 registers and states. This can be quite significant when there is rapid switching between threads.	
-Goroutines are coopertively scheduled (read more). When a goroutine switch occurs, only 3 registers need to be saved or restored.
+Goroutines are cooperatively scheduled (read more). When a goroutine switch occurs, only 3 registers need to be saved or restored.
 
 
 Go manages goroutines at two levels, local queues and global queues. Local queues are attached to each processor, while the global queue is common.
@@ -101,8 +101,8 @@ This behavior explains why a goroutine runs on different P and shows how Go opti
 ![img.png](img.png)
 
 In this diagram, you can see that P1 ran out of goroutines. So the Go's runtime scheduler will take goroutines from other processors. 
-If every other processor run queue is empty, it checks for completed IO requests (syscalls, network requests) from the netpoller. 
-If this netpoller is empty, the processor will try to get goroutines from the global run queue.
+If every other processor run queue is empty, it checks for completed IO requests (sys calls, network requests) from the net-poller. 
+If this net-poller is empty, the processor will try to get goroutines from the global run queue.
 
 
 “Concurrency is about structure and parallelism is about execution. In other words, concurrency is a way to structure a thing so that you can (maybe) use parallelism to do a better job.” — Rob Pike
