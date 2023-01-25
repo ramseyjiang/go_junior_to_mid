@@ -9,6 +9,7 @@ func main() {
 	replacer()
 	compare()
 	contains()
+	index()
 }
 
 // The strings.NewReplacer is used to take arguments with a string to replace ("a"), and a string to replace it with ("o")
@@ -44,6 +45,15 @@ func contains() {
 	str2 := "ac"
 
 	a := strings.Contains(str, str1)
+	b := strings.Contains(str, str2)
+	fmt.Println(a, b)
+}
+
+func index() {
+	str := "abc"
+	str1 := "ab"
+	str2 := "ac"
+	a := strings.Index(str, str1)
 	b := strings.Contains(str, str2)
 	fmt.Println(a, b)
 }
