@@ -13,7 +13,7 @@ func main() {
 		done <- struct{}{}
 	}()
 
-	// do something synchronous, if it does not has "<-done", it will has the below panic. Otherwise, use the waitgroup for sync.
+	// do something synchronous, if it does not have "<-done", it will have the below panic. Otherwise, use the wait group for sync.
 	// panic: runtime error: index out of range [0] with length 0
 	<-done                  // read done from channel
 	numbers[0] = 1          // will not panic anymore
