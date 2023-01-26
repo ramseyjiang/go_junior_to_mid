@@ -10,8 +10,7 @@ import "fmt"
 // There is a one-to-one relationship between the sender and the receiver of the data.
 // If there’s no receiver, a message is stuck with the sender.
 
-// Go statements can’t be used with return values, because there’s no guarantee the return value will be ready
-// before we attempt to use it.
+// Go statements can’t be used with return values, because there’s no guarantee the return value will be ready before we attempt to use it.
 
 // The only practical way to use a channel is to communicate from one goroutine to another goroutine.
 // Not only does channel allow you to send values from one goroutine to another, they ensure the sending goroutine

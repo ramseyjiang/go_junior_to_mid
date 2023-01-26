@@ -6,8 +6,23 @@ That makes it easier to write thread-safe concurrent programs and prevent race c
 It provides go keyword to create goroutines. When go keyword is placed before a function call, it becomes goroutines.
 Goroutines behave like threads but technically; it is an abstraction over threads.
 
-Closing a channel prevents a goroutine from sending data into it. But it does not prevent consuming data from the channel.
+A channel can be closed so that no more data can be sent through it.
+It means closing a channel prevents a goroutine from sending data into it. But it does not prevent consuming data from the channel.
 This makes sense as we would not want to risk crucial data being left orphaned.
+
+
+Channels' two features are the following. 
+The first one, channels can be sent as parameters to different goroutines. 
+The second one, channels work as both a publisher and subscriber model. 
+There is a one-to-one relationship between the sender and the receiver of the data. 
+If there’s no receiver, a message is stuck with the sender.
+
+
+In Go, the only practical way to use a channel is to communicate from one goroutine to another goroutine. 
+Not only does the channel allow you to send values from one goroutine to another, 
+but they also ensure the sending goroutine has sent the value before the receiving goroutine attempts to use it. 
+Channels do this by blocking — by pausing all further operations in the current goroutine. 
+A send operation blocks the sending goroutine until a goroutine executes a received operation on the same channel.
 
 
 **Receive data from an empty channel and send data to a full channel**
