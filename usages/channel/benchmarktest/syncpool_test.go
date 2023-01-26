@@ -13,6 +13,18 @@ sync.Pool can cache objects that are not used temporarily and use them directly 
 This can potentially reduce the GC workload and improve performance.
 */
 
+/*
+go test -bench=. -benchtime=5s
+goos: darwin
+goarch: arm64
+pkg: github.com/ramseyjiang/go_junior_to_mid/usages/channel/benchmarktest
+
+BenchmarkWithoutPool-10            80292             74569 ns/op           80000 B/op      10000 allocs/op
+BenchmarkWithPool-10               73711             81532 ns/op               0 B/op          0 allocs/op
+BenchmarkPool-10                1000000000               1.004 ns/op
+
+*/
+
 type Person struct {
 	Age int
 }
