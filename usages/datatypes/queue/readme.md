@@ -1,5 +1,5 @@
-Queue is to think of a queue as a line of people who are waiting for service.
-The newcomer goes at the end of the queue while the person who at the beginning gets service.
+The queue is to think of a queue as a line of people who are waiting for service.
+The newcomer goes to the end of the queue while the person who was at the beginning gets service.
 
 Queue is using first in first out principle(FIFO).
 
