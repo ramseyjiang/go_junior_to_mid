@@ -3,12 +3,16 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"runtime"
 	"sync"
 	"time"
 )
 
 func main() {
 	list := []string{"a", "b", "c", "d", "e", "f", "g", "h"}
+
+	// Since 2018, By default, Go programs run with GOMAXPROCS set to the number of cores available
+	fmt.Println("GOMAXPROCS default value is ", runtime.GOMAXPROCS(0))
 
 	noCurrency(list)
 	withGoroutineConcurrency(list)
