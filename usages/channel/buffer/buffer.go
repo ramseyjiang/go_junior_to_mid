@@ -21,9 +21,15 @@ func channelCapacity() {
 	c := make(chan string, 2)
 	go sender(c)
 
+	// because it runs concurrent, so here "Length of channel c is 0 and capacity of channel c is 2."
 	fmt.Printf("Length of channel c is %v and capacity of channel c is %v\n", len(c), cap(c))
 
 	// In the sender(c), it has closed the channel, but it uses buffer, so below codes can also read data from buffer.
+	// During the for range, it will read data from channel.
+	// After each time read data from channel, the length is changed, but capacity is always the same.
+	// Length of channel c has read value 'Some Sample Data' length is 2, capacity is 2
+	// Length of channel c has read value 'Some Other Sample Data' length is 1, capacity is 2
+	// Length of channel c has read value 'Buffered Channel' length is 0, capacity is 2
 	for val := range c {
 		// After buffer a channel, output is from the first buffer to the last one.
 		fmt.Printf("Length of channel c has read value '%v' length is %v, capacity is %v\n", val, len(c), cap(c))
@@ -33,9 +39,9 @@ func channelCapacity() {
 }
 
 func sender(dataChannel chan string) {
-	dataChannel <- "Some Sample Data"       // len 2, cap 2
-	dataChannel <- "Some Other Sample Data" // len 1, cap 2
-	dataChannel <- "Buffered Channel"       // len 0, cap 2, block here.
+	dataChannel <- "Some Sample Data"
+	dataChannel <- "Some Other Sample Data"
+	dataChannel <- "Buffered Channel"
 
 	// If here does not have the close(c), it will have "fatal error: all goroutines are asleep - deadlock!"
 	// After it adds the close, it won't wait for receiving a data.
@@ -85,9 +91,8 @@ func channelBufferFullBlock() {
 	fmt.Println()
 	fmt.Println("After func squares outputs all variables, channel c is empty again. So it can receive values again.")
 
-	// In squares func, if it has close(c), only c <- 4 will run successfully.
-	// If it does not have close(c), c <- 4, c <- 5 and c <- 6 will run successfully.
-	// Because channel c has 3 buffer, it can put 3 values in buffer after it is closed.
+	// In squares func, if it has close(c), c <- 4, c <- 5 and c <- 6 will not run successfully.
+	// Because channel c has 3 buffer, it can get all values in buffer after it is closed.
 	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
 	c <- 4
 	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
@@ -97,12 +102,9 @@ func channelBufferFullBlock() {
 	c <- 6
 	fmt.Printf("channel c, length of is %v, capacity is %v\n", len(c), cap(c))
 
-	// fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
-	// go squares(c) // trigger another new goroutine works.
+	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
+	// go squares(c)                                            // trigger another new goroutine works.
 	// fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 2
-	// c <- 7 // After this executes, one channel is full, so that goroutine squares stops working. squares will output results in loop.
-	// c <- 8 // If line 102 is uncommented, c <- 8 and c <- 9 will be store in the buffer.
-	// c <- 9
 
 	// because the channel is full, so the full channel stopped working, only main channel still works.
 	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
@@ -125,7 +127,8 @@ func squares(c chan int) {
 
 func main() {
 	// main() is a special goroutine.
+	channelCapacity()
 	fmt.Println("active goroutines", runtime.NumGoroutine()) // active goroutines 1
 	channelBufferFullBlock()
-	channelCapacity()
+
 }
