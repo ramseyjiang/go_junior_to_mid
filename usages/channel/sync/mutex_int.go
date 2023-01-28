@@ -21,7 +21,8 @@ func main() {
 	var m sync.Mutex
 
 	for i := 0; i < 100; i++ {
-		wg.Add(1)
+		wg.Add(2)
+		go worker(&wg, &m)
 		go worker(&wg, &m)
 	}
 
