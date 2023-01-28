@@ -40,7 +40,7 @@ func main() {
 	tasks := make(chan int, capacity)
 	results := make(chan int, capacity)
 
-	// Launching 3 worker goroutines.
+	// Launching 3 worker goroutines. At here, how many goroutines depend on the integer i.
 	// Spawn multiple instances of sqrWorker as goroutines to get information on which worker is executing a task.
 	for i := 0; i < 3; i++ {
 		wg.Add(1)
