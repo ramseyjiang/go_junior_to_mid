@@ -18,8 +18,9 @@ func firstCase() {
 	for i := 0; i < 10; i++ {
 		wg.Add(1)
 		// fmt.Println("main goroutine is run at ", time.Now())
+		a := i // If here does not have a:=i, only using variable i in line 23, it won't output the correct num.
 		go func() {
-			fmt.Println(i)
+			fmt.Println(a) // if here uses the variable i, it won't be the immediate value. The variable i will become 10 during it's output.
 			// fmt.Println("go goroutine is run at ", time.Now())
 			wg.Done()
 		}()
@@ -29,6 +30,7 @@ func firstCase() {
 	wg.Wait()
 }
 
+// correctCase is using the correct way to pass variable i into a goroutine. It is easier than the first one.
 func correctCase() {
 	var wg = &sync.WaitGroup{}
 	fmt.Println("-----correctCase start-----")
