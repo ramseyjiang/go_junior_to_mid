@@ -19,6 +19,7 @@ func sqrWorker(wg *sync.WaitGroup, tasks <-chan int, results chan<- int, instanc
 		// until for range loop is done and goroutine dies.
 		time.Sleep(time.Millisecond)
 
+		// get information on which worker is executing a task. Totally, in this totally using 3 goroutines.
 		fmt.Printf("[worker %v] Sending result by worker %v\n", instance, instance)
 
 		// When worker goroutine becomes available, it writes to the results channel.
