@@ -45,21 +45,21 @@ func runMapMutexWriter(ctx context.Context) {
 	}
 }
 
-// main is used 15 reader goroutines and a single writer goroutine.
+// main is used 5 reader goroutines and a single writer goroutine.
 func main() {
 	testContext, cancel := context.WithCancel(context.Background())
 
 	readCh := make(chan int)
 	sharedMapForMutex["key"] = 0
 
-	numberOfReaders := 15
+	numberOfReaders := 5
 	for i := 0; i < numberOfReaders; i++ {
 		go runMapMutexReader(testContext, readCh)
 	}
 	go runMapMutexWriter(testContext)
 
 	// The writer updates the “sharedMap” every 100 milliseconds.
-	// writeCount = writerRunSecond * time.Second * 1000 / 100
+	// writeCount = writerRunSecond * time.Second * 1000 / 100 = 30
 	time.Sleep(mutexWriterRunSecond * time.Second)
 
 	cancel()
@@ -71,6 +71,7 @@ func main() {
 
 	time.Sleep(1 * time.Second)
 
+	// if writerRunSecond = 2, the value of 20
 	writeCount := sharedMapForMutex["key"]
 	fmt.Printf("[MUTEX] Write Counter value: %v\n", writeCount)
 	fmt.Printf("[MUTEX] Read Counter value: %v\n", totalReadCount)
