@@ -1,4 +1,4 @@
-Two ways to run this instance.go
+Three ways to run this instance.go
 One way, go run instance.go,
 % go run instance.go
 value of j after 1000 operations is  953
