@@ -1,3 +1,11 @@
+What is the race condition?
+
+When two processes try to access the same resource at the same time with one or more writing operations, both of them process writing or one process writing while the other reads, involved at that precise moment.
+
+Go has a very handy tool to help diagnose race conditions, that you can run in your tests or your application directly.
+
+"-race", in Golang, it is called Race detector.
+
 Three ways to run this instance.go
 One way, go run instance.go,
 % go run instance.go

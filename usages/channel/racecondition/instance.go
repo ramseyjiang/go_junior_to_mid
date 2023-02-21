@@ -6,6 +6,8 @@ import (
 )
 
 // If one thread tries to increase an integer and another thread tries to read it, this will cause a race condition.
+// This is because the “++” operation requires a read of the current value and a write to add one to it.
+// That's why the race condition is in the same line, because every time it's executed it reads and writes the field.
 // The easiest way to do it is by using multiple goroutines, and at least one of the goroutines must be writing to a shared variable.
 // All methods which are used to fix race condition, are in the sync folder.
 var sharedInt = 0
