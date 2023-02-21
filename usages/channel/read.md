@@ -3,6 +3,10 @@
 Channels are a mechanism that allow goroutines (which are similar to threads) to pass data from one to another. 
 That makes it easier to write thread-safe concurrent programs and prevent race conditions.
 
+Channels are ways to communicate between Goroutines by sending data through one end and receiving it at the other like a pipe. 
+In their default state, an emitter Goroutine will block its execution until a receiver Goroutine takes the data. 
+The same goes for a receiver Goroutine, which will block until some emitter sends data through the channel.
+
 It provides go keyword to create goroutines. When go keyword is placed before a function call, it becomes goroutines.
 Goroutines behave like threads but technically; it is an abstraction over threads.
 
@@ -31,6 +35,12 @@ Whenever a goroutine attempts to pull data from an empty channel, it will block 
 The goroutine is added to a queue in the channel struct for receivers. 
 But when another goroutine attempts to send data to a channel with waiting receivers, that data does not get added to the buffer. 
 Instead, the runtime passes the data directly to the first waiting goroutine, bypassing the buffer entirely.
+
+
+**Select**
+The select statement is used to handle more than one channel input within a Goroutine.
+In the select structure, we ask the program to choose between one or more channels to receive their data.
+The select structure is just executed once; it doesn't matter if it is listening to more channels, it will be executed only once and the code will continue executing. If we want it to handle the same channels more than once, we have to put it in a for loop.
 
 
 **Goroutines**
