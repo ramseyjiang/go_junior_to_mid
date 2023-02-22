@@ -1,38 +1,47 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"sync"
 )
 
-var sharedInt int // sharedInt default value is 0
-
-// goroutine increment global variable j
-func worker(wg *sync.WaitGroup, m *sync.Mutex) {
-	m.Lock() // acquire lock
-	sharedInt++
-	m.Unlock() // release lock
-	wg.Done()
-}
-
-// Create one sync m and pass a pointer to it to all spawn goroutines.
 func main() {
-	var wg sync.WaitGroup
-	var m sync.Mutex
+	var count int
+	var lock sync.Mutex
 
-	for i := 0; i < 100; i++ {
-		wg.Add(2)
-		go worker(&wg, &m)
-		go worker(&wg, &m)
+	plus := func() {
+		lock.Lock()         // request exclusive use of the critical section—in this case the count variable— guarded by a Mutex, lock.
+		defer lock.Unlock() // indicate that we’re done with the critical section lock is guarding.
+		count++
+		fmt.Printf("Incrementing: %d\n", count)
 	}
 
-	// wait until all 100 goroutines are done
-	wg.Wait()
+	minus := func() {
+		lock.Lock()         // request exclusive use of the critical section—in this case the count variable— guarded by a Mutex, lock.
+		defer lock.Unlock() // indicate that we’re done with the critical section lock is guarding.
+		count--
+		fmt.Printf("Decrementing: %d\n", count)
+	}
 
-	// value of j, here is 100.
-	// It is different the example in the racecondition folder.
-	// In that one, it has race condition. Using sync to help us to resolve race conditions.
-	// But only 1 goroutine can get to read or write value in sync.
-	// When you use Mutex, the first rule is to avoid shared resources between goroutines.
-	log.Printf("value of i after 100 operations is %v", sharedInt)
+	// Increment
+	var arithmetic sync.WaitGroup
+	for i := 0; i <= 5; i++ {
+		arithmetic.Add(1)
+		go func() {
+			defer arithmetic.Done()
+			plus()
+		}()
+	}
+
+	// Decrement
+	for i := 0; i <= 5; i++ {
+		arithmetic.Add(1)
+		go func() {
+			defer arithmetic.Done()
+			minus()
+		}()
+	}
+
+	arithmetic.Wait()
+	fmt.Println("Arithmetic complete.")
 }
