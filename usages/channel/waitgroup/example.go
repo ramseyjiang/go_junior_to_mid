@@ -14,6 +14,14 @@ This counter when reaches zero, means all goroutines have done their job.
 */
 
 func main() {
+	service := func(wg *sync.WaitGroup, i int) {
+		fmt.Printf("ID:%d: Hello goroutines!\n", i)
+
+		// Here we call Done using defer keyword to ensure that before we exit the goroutine’s closure,
+		// we indicate to the WaitGroup that we’ve exited.
+		defer wg.Done()
+	}
+
 	var wg sync.WaitGroup // create WaitGroup empty struct
 
 	goRoutines := 5
@@ -26,18 +34,10 @@ func main() {
 	for i := 0; i < goRoutines; i++ {
 		// Add method accept type of int, that means delta can also be negative.
 		// That will be used when you know amount of goroutines, and then you can try to use -1 to make it work.
-		go func(goRoutineID int) {
-			fmt.Printf("ID:%d: Hello goroutines!\n", goRoutineID)
-
-			// Once we are done with whatever the goroutine was supposed to do, we need to call Done method to decrement the counter.
-			// Done method decrements the counter. It does not accept any argument, hence it only decrements the counter by 1.
-			wg.Done()
-		}(i)
+		go service(&wg, i+1)
 	}
 
-	// blocks here
-	// Wait method is used to block the current goroutine from where it was called.
-	// Once counter reaches 0, that goroutine will unblock.
+	// Here we call Wait, which will block the main goroutine until all goroutines have indicated they have exited.
 	wg.Wait()
 
 	fmt.Println("main goroutine finished, all goroutines have finished")

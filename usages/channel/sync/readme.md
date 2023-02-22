@@ -1,3 +1,5 @@
+The sync package contains the concurrency primitives that are most useful for low level memory access synchronization.
+
 Mutex (mutual exclusion) is a concept in programming where only one routine (thread) can perform multiple operations at a time.
 It is done by one routine acquiring the lock on value, do whatever manipulation on the value it has to do and then releasing the lock.
 When the value is locked, no other routine can read or write to it.
