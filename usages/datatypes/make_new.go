@@ -14,43 +14,40 @@ func main() {
 	usageMake()
 }
 
+// Teacher Allocate memory for a custom struct type and return a pointer to it
+type Teacher struct {
+	Name   string
+	Age    int
+	Gender bool
+}
+
 // The new keyword in Golang is used to create a new instance of a variable, and it returns a pointer to the memory allocated.
 func usageNew() {
-	// new is used to allocate memory for an int variable, and return a pointer to it.
-	ptr := new(int)
 
-	fmt.Println(ptr)
+	t := new(Teacher)
 
-	// setting the value of the newly allocated int variable
-	*ptr = 5
+	fmt.Println(t)
 
-	// output: 5
-	fmt.Println(*ptr)
+	fmt.Println((*t).Gender, (*t).Name, (*t).Age)
 
-	// Allocate memory for a custom struct type and return a pointer to it
-	type Person struct {
-		Name string
-		Age  int
-	}
-
-	p := new(Person)
-
-	fmt.Println(p)
-
-	fmt.Println((*p).Name, (*p).Age)
+	intPtr := new(int)
+	fmt.Println(intPtr)
+	fmt.Println(*intPtr)
+	*intPtr = 6
+	fmt.Println(*intPtr)
 }
 
 // The make keyword in Golang is used to create slices, maps, and channels, and it returns a value of the type that was created.
 func usageMake() {
-	// make is used to create a new slice of int type with a length of 3, and the slice is stored in the s variable.
-	s := make([]int, 2)
-	fmt.Println(s)
+	// make is used to create a new slice of int type with a length of 2, and the slice is stored in the s variable.
+	numbers := make([]int, 2)
+	ages := make(map[string]int)
+	fmt.Println(numbers)
 	// setting the values of the slice
-	s[0] = 1
-	s[1] = 2
+	numbers[0] = 1
+	numbers[1] = 2
 
-	// output: [1 2]
-	fmt.Println(s)
+	fmt.Println(ages)
 }
 
 /*
