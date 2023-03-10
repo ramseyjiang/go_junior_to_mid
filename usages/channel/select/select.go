@@ -1,6 +1,12 @@
 package main
 
-import "time"
+import (
+	"fmt"
+	"runtime"
+	"time"
+)
+
+// select statements can help safely bring channels together with concepts like cancellations, timeouts, waiting, and default values.
 
 // Created the three channels that we'll need in this exercise.
 // Then, we launched our receiver function in a different Goroutine.
@@ -29,6 +35,9 @@ func main() {
 	time.Sleep(time.Second)
 	go sendString(goodbyeCh, "goodbye!")
 	<-quitCh
+
+	nilChan()
+	loopSleep()
 }
 
 // The receiver take messages from both channels–the one that sends hello messages and the one that sends goodbye messages.
@@ -63,4 +72,44 @@ func receiver(helloCh <-chan string, goodbyeCh <-chan string, quitCh chan<- bool
 
 func sendString(ch chan<- string, s string) {
 	ch <- s
+}
+
+// nilChan is an instance with nil chan, it is used to indicate a channel never become ready.
+func nilChan() {
+	var c <-chan int
+	select {
+	// This case statement will never become unblocked because we’re reading from a nil channel.
+	case <-c:
+	// when all the channels are blocked, but you also can’t block forever, you may want to time out.
+	// Go’s time package provides an elegant way to do this with channels that fits nicely within the paradigm of select statements.
+	// The time.After function takes in a time.Duration argument and returns a channel
+	// that will send the current time after the duration you provide it.
+	// This offers a concise way to time out in select statements.
+	case <-time.After(1 * time.Second):
+		fmt.Println("Timed out.")
+	}
+}
+
+func loopSleep() {
+	done := make(chan interface{})
+	go func() {
+		time.Sleep(5 * time.Second)
+		close(done)
+	}()
+	workCounter := 0
+loop:
+	for {
+		select {
+		case <-done:
+			break loop
+		default:
+		}
+
+		// Simulate work, the above select won't block.
+		// select {} means select statements with no case clauses. It will block forever.
+		workCounter++
+		time.Sleep(1 * time.Second)
+	}
+	fmt.Printf("Achieved %v cycles of work before signalled to stop.\n", workCounter)
+	fmt.Println(runtime.GOMAXPROCS(runtime.NumCPU()))
 }
