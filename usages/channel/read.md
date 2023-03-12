@@ -1,3 +1,8 @@
+go build -gcflags "-m" file-name.go
+Show run details
+./built-file-name
+Run the built file of Go
+
 **What is the Channel?**
 
 Channels are a mechanism that allow goroutines (which are similar to threads) to pass data from one to another. 
