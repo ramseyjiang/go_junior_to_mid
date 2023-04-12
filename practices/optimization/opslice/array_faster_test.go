@@ -1,23 +1,25 @@
 package opslice
 
+import (
+	"testing"
+)
+
 var opStr = [5]string{"one", "two", "3", "4", "five"}
 
-func declareReturnSliceNoLength(s [5]string) (allSlice []string) {
+func BenchmarkReturnSlice(b *testing.B) {
+	var allSlice []string
 	for sum := 0; sum < 100; sum++ {
-		for _, v := range s {
+		for _, v := range opStr {
 			allSlice = append(allSlice, v)
 		}
 	}
-
-	return
 }
 
-func declareReturnSliceWithLength(s [5]string) (allSlice [500]string) {
+func BenchmarkReturnArray(b *testing.B) {
+	var allSlice [500]string
 	for sum := 0; sum < 100; sum++ {
-		for i, v := range s {
+		for i, v := range opStr {
 			allSlice[i] = v
 		}
 	}
-
-	return
 }
