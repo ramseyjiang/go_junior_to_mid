@@ -12,7 +12,7 @@ func computeConcurrently(wg *sync.WaitGroup) {
 	result := 0
 	for i := 0; i < 100000000; i++ {
 		result += i
-		time.Sleep(1 * time.Nanosecond)
+		// time.Sleep(1 * time.Nanosecond)
 	}
 	fmt.Printf("Result: %d\n", result)
 }
